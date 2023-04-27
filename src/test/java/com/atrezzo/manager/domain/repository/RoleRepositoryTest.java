@@ -4,9 +4,11 @@ package com.atrezzo.manager.domain.repository;
 import com.atrezzo.manager.domain.model.Role;
 import com.atrezzo.manager.domain.model.enums.Roles;
 import com.atrezzo.manager.infrastructure.persistence.RoleEntity;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -24,6 +26,31 @@ public class RoleRepositoryTest {
 
     @Mock
     RoleRepository roleRepository;
+
+    @InjectMocks
+    RoleRepositoryTest roleRepositoryTest;
+
+    private RoleEntity roleEntity;
+
+
+    @BeforeEach
+    void setUp() {
+        roleEntity = new RoleEntity(1L, Roles.WORKER_ROLE);
+    }
+
+    @Test
+    @DisplayName("Encontrar role por nombre")
+    void findByRoleNameTest() {
+
+        Roles roleName = Roles.WORKER_ROLE;
+
+        when(roleRepository.findByRoleName(roleName)).thenReturn(Optional.ofNullable(roleEntity));
+
+        Optional<RoleEntity> result = roleRepository.findByRoleName(roleName);
+
+        assertEquals(roleName, result.get().getRoleName());
+        assertEquals(1L, result.get().getId());
+    }
 
     @Test
     @DisplayName("create role in repository")

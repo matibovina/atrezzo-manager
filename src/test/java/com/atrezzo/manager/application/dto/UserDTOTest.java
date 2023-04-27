@@ -1,20 +1,20 @@
-package com.atrezzo.manager.domain.model;
+package com.atrezzo.manager.application.dto;
 
-import com.atrezzo.manager.domain.model.enums.Roles;
-import org.junit.jupiter.api.Assertions;
+import com.atrezzo.manager.domain.model.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class UserTest {
+public class UserDTOTest {
+
 
 
     @Test
     @DisplayName("create user")
     void createUserTest(){
 
-        User user1 = new User();
+        UserDTO user1 = new UserDTO();
         user1.setId(1L);
         user1.setUsername("matibovina");
         user1.setEmail("matias@matias.com");
@@ -25,5 +25,4 @@ public class UserTest {
         assertEquals("matias@matias.com", user1.getEmail());
         assertEquals("123456", user1.getPassword());
     }
-
 }

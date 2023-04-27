@@ -1,13 +1,22 @@
 package com.atrezzo.manager.application.dto;
 
-import com.atrezzo.manager.domain.model.Role;
 import com.atrezzo.manager.domain.model.enums.Roles;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 
 @Data
-public class RoleDTO {
+@AllArgsConstructor
+@NoArgsConstructor
+public class RoleDTO implements Serializable {
 
-    Long id;
-    Roles roleName;
+   private Long id;
+
+    @Enumerated(EnumType.STRING)
+    private Roles roleName;
 
 }

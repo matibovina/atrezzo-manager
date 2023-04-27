@@ -30,12 +30,12 @@ import static org.mockito.Mockito.*;
 public class RoleServiceImplTest {
 
     @Mock
-    RoleRepository roleRepository;
+   private RoleRepository roleRepository;
 
     @InjectMocks
-    RoleServiceImpl roleService;
+    private RoleServiceImpl roleService;
 
-    ModelMapper modelMapper = new ModelMapper();
+    private ModelMapper modelMapper = new ModelMapper();
 
     private Role role;
     private RoleEntity roleEntity;
@@ -56,7 +56,9 @@ public class RoleServiceImplTest {
     @Test
     @DisplayName("Create Role")
     void createRoleTest() {
-        roleEntity = modelMapper.map(roleDTO, RoleEntity.class);
+//        Roles enumRole = Roles.valueOf(roleDTO.getRoleName());
+//        roleEntity.setRoleName(enumRole);
+        modelMapper.map(roleDTO, RoleEntity.class);
 
         when(roleRepository.save(roleEntity)).thenReturn(roleEntity);
 
