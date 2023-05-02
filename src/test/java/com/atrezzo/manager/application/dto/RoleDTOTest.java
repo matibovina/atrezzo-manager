@@ -1,6 +1,5 @@
 package com.atrezzo.manager.application.dto;
 
-import com.atrezzo.manager.domain.model.Role;
 import com.atrezzo.manager.domain.model.enums.Roles;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,7 +12,7 @@ public class RoleDTOTest {
     @DisplayName("create role")
     void createRoleTest() {
         Long id = 1L;
-        Roles roleName = Roles.ADMIN_ROLE;
+        Roles roleName = Roles.ROLE_ADMIN;
 
         RoleDTO role = new RoleDTO(id, roleName);
 

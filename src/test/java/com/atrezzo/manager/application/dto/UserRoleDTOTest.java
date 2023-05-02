@@ -1,8 +1,5 @@
 package com.atrezzo.manager.application.dto;
 
-import com.atrezzo.manager.domain.model.Role;
-import com.atrezzo.manager.domain.model.User;
-import com.atrezzo.manager.domain.model.UserRole;
 import com.atrezzo.manager.domain.model.enums.Roles;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,7 +20,7 @@ public class UserRoleDTOTest {
 
         RoleDTO role = new RoleDTO();
         role.setId(1L);
-        role.setRoleName(Roles.ADMIN_ROLE);
+        role.setRoleName(Roles.ROLE_ADMIN);
 
         UserRoleDTO userRole = new UserRoleDTO();
         userRole.setId(1L);

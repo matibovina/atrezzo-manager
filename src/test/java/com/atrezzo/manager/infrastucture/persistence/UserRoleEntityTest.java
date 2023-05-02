@@ -1,9 +1,6 @@
 package com.atrezzo.manager.infrastucture.persistence;
 
 
-import com.atrezzo.manager.domain.model.Role;
-import com.atrezzo.manager.domain.model.User;
-import com.atrezzo.manager.domain.model.UserRole;
 import com.atrezzo.manager.domain.model.enums.Roles;
 import com.atrezzo.manager.infrastructure.persistence.RoleEntity;
 import com.atrezzo.manager.infrastructure.persistence.UserEntity;
@@ -28,7 +25,7 @@ public class UserRoleEntityTest {
 
         RoleEntity role = new RoleEntity();
         role.setId(1L);
-        role.setRoleName(Roles.ADMIN_ROLE);
+        role.setRoleName(Roles.ROLE_ADMIN);
 
         UserRoleEntity userRole = new UserRoleEntity();
         userRole.setId(1L);

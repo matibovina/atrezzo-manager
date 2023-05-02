@@ -44,13 +44,13 @@ public class RoleServiceImplTest {
     @BeforeEach
     public void setUp() {
         role = new Role();
-        role.setRoleName(Roles.WORKER_ROLE);
+        role.setRoleName(Roles.ROLE_WORKER);
         roleEntity = new RoleEntity();
         roleEntity.setId(1L);
-        roleEntity.setRoleName(Roles.WORKER_ROLE);
+        roleEntity.setRoleName(Roles.ROLE_WORKER);
         roleDTO = new RoleDTO();
         roleDTO.setId(1L);
-        roleDTO.setRoleName(Roles.WORKER_ROLE);
+        roleDTO.setRoleName(Roles.ROLE_WORKER);
     }
 
     @Test
@@ -67,7 +67,7 @@ public class RoleServiceImplTest {
 
        assertNotNull(createdRole);
        assertEquals(1L, createdRole.getId());
-       assertEquals(Roles.WORKER_ROLE, createdRole.getRoleName());
+       assertEquals(Roles.ROLE_WORKER, createdRole.getRoleName());
 
     }
 
@@ -92,7 +92,7 @@ public class RoleServiceImplTest {
         RoleDTO foundRoleDto = roleService.findRoleById(id);
 
         assertNotNull(foundRoleDto);
-        assertEquals(Roles.WORKER_ROLE, foundRoleDto.getRoleName());
+        assertEquals(Roles.ROLE_WORKER, foundRoleDto.getRoleName());
     }
 
     @Test
@@ -110,8 +110,8 @@ public class RoleServiceImplTest {
     @DisplayName("Get All Roles")
     void getAllRolesTest() throws NoRolesFoundException {
 
-        RoleEntity roleEntity1 = new RoleEntity(2L, Roles.ADMIN_ROLE);
-        RoleEntity roleEntity2 = new RoleEntity(3L, Roles.CLIENT_ROLE);
+        RoleEntity roleEntity1 = new RoleEntity(2L, Roles.ROLE_ADMIN);
+        RoleEntity roleEntity2 = new RoleEntity(3L, Roles.ROLE_CLIENT);
 
 
 
@@ -152,7 +152,7 @@ public class RoleServiceImplTest {
 
         RoleDTO updateRoleDto = new RoleDTO();
         updateRoleDto.setId(1L);
-        updateRoleDto.setRoleName(Roles.ADMIN_ROLE);
+        updateRoleDto.setRoleName(Roles.ROLE_ADMIN);
 
 
 
@@ -161,7 +161,7 @@ public class RoleServiceImplTest {
         RoleDTO resultDTO = roleService.updateRole(id, updateRoleDto);
 
         assertNotNull(resultDTO);
-        assertEquals(Roles.ADMIN_ROLE, resultDTO.getRoleName());
+        assertEquals(Roles.ROLE_ADMIN, resultDTO.getRoleName());
         assertEquals(id, resultDTO.getId());
 
     }
@@ -172,7 +172,7 @@ public class RoleServiceImplTest {
         Long id = 1L;
         RoleDTO updateRole = new RoleDTO();
         updateRole.setId(1L);
-        updateRole.setRoleName(Roles.ADMIN_ROLE);
+        updateRole.setRoleName(Roles.ROLE_ADMIN);
 
         when(roleRepository.findById(id)).thenReturn(Optional.empty());
         assertThrows(NoRolesFoundException.class, () -> roleService.updateRole(id, updateRole));

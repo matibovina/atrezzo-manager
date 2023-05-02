@@ -23,7 +23,7 @@ public class UserRoleTest {
 
         Role role = new Role();
         role.setId(1L);
-        role.setRoleName(Roles.ADMIN_ROLE);
+        role.setRoleName(Roles.ROLE_ADMIN);
 
         UserRole userRole = new UserRole();
         userRole.setId(1L);

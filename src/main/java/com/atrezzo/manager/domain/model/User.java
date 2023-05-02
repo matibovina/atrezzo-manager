@@ -1,5 +1,6 @@
 package com.atrezzo.manager.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,7 @@ public class User {
 
     private String password;
 
+    @JsonIgnore
     private List<UserRole> roles;
 
     private Boolean enabled;

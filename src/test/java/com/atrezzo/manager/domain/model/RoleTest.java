@@ -14,7 +14,7 @@ public class RoleTest {
     @DisplayName("create role")
     void createRoleTest() {
         Long id = 1L;
-        Roles roleName = Roles.ADMIN_ROLE;
+        Roles roleName = Roles.ROLE_ADMIN;
 
         Role role = new Role(id, roleName);
 

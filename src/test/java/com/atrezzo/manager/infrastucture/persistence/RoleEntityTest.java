@@ -13,7 +13,7 @@ public class RoleEntityTest {
     @DisplayName("create role")
     void createRoleTest() {
         Long id = 1L;
-        Roles roleName = Roles.ADMIN_ROLE;
+        Roles roleName = Roles.ROLE_ADMIN;
 
         RoleEntity role = new RoleEntity(id, roleName);
 

@@ -38,7 +38,7 @@ public class RoleControllerTest {
     public void setUp(){
         roleDTO = new RoleDTO();
         roleDTO.setId(1L);
-        roleDTO.setRoleName(Roles.ADMIN_ROLE);
+        roleDTO.setRoleName(Roles.ROLE_ADMIN);
     }
 
     @Test
@@ -71,8 +71,8 @@ public class RoleControllerTest {
     @DisplayName("Find all Roles")
     void findAllRolesTest() throws RoleNotFoundException {
 
-        RoleDTO roleDTO1 = new RoleDTO(2L, Roles.CLIENT_ROLE);
-        RoleDTO roleDTO2 = new RoleDTO(3L, Roles.WORKER_ROLE);
+        RoleDTO roleDTO1 = new RoleDTO(2L, Roles.ROLE_CLIENT);
+        RoleDTO roleDTO2 = new RoleDTO(3L, Roles.ROLE_WORKER);
 
         List<RoleDTO> roleDTOS = Arrays.asList(roleDTO1, roleDTO2);
 

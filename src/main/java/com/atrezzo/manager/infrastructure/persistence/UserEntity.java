@@ -1,6 +1,7 @@
 package com.atrezzo.manager.infrastructure.persistence;
 
 import com.atrezzo.manager.domain.model.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
@@ -32,6 +33,7 @@ public class UserEntity {
     private String email;
 
     private String password;
+
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserRoleEntity> roles = new ArrayList<>();

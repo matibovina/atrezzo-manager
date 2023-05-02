@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -23,10 +24,12 @@ public class UserDTO implements Serializable {
 
     private String password;
 
-    private List<Role> roles;
+    private List<UserRoleDTO> roles = new ArrayList<>();
 
     private Boolean enabled;
 
     private LocalDateTime creationDate;
+
+    private String roleName;
 
 }
