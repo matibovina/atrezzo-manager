@@ -1,14 +1,13 @@
-package com.atrezzo.manager.domain.model;
+package com.atrezzo.manager.infrastucture.persistence;
 
 import com.atrezzo.manager.domain.model.enums.Roles;
+import com.atrezzo.manager.infrastructure.persistence.RoleEntity;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class RoleTest {
+public class RoleEntityTest {
 
     @Test
     @DisplayName("create role")
@@ -16,7 +15,7 @@ public class RoleTest {
         Long id = 1L;
         Roles roleName = Roles.ROLE_ADMIN;
 
-        Role role = new Role(id, roleName);
+        RoleEntity role = new RoleEntity(id, roleName);
 
         assertEquals(id, role.getId());
         assertEquals(roleName, role.getRoleName());

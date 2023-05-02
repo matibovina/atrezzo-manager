@@ -1,18 +1,20 @@
-package com.atrezzo.manager.domain.model;
+package com.atrezzo.manager.application.dto;
 
+import com.atrezzo.manager.domain.model.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.swing.*;
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class UserDTO implements Serializable {
 
     private Long id;
 
@@ -22,11 +24,12 @@ public class User {
 
     private String password;
 
-    @JsonIgnore
-    private List<UserRole> roles;
+    private List<UserRoleDTO> roles = new ArrayList<>();
 
     private Boolean enabled;
 
     private LocalDateTime creationDate;
+
+    private String roleName;
 
 }

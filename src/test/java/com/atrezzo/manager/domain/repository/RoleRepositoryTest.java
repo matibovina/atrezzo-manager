@@ -1,16 +1,16 @@
 package com.atrezzo.manager.domain.repository;
 
 
-import com.atrezzo.manager.domain.model.Role;
 import com.atrezzo.manager.domain.model.enums.Roles;
 import com.atrezzo.manager.infrastructure.persistence.RoleEntity;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.modelmapper.ModelMapper;
 
 import java.util.Optional;
 
@@ -25,31 +25,56 @@ public class RoleRepositoryTest {
     @Mock
     RoleRepository roleRepository;
 
+    @InjectMocks
+    RoleRepositoryTest roleRepositoryTest;
+
+    private RoleEntity roleEntity;
+
+
+    @BeforeEach
+    void setUp() {
+        roleEntity = new RoleEntity(1L, Roles.ROLE_WORKER);
+    }
+
+    @Test
+    @DisplayName("Encontrar role por nombre")
+    void findByRoleNameTest() {
+
+        Roles roleName = Roles.ROLE_WORKER;
+
+        when(roleRepository.findByRoleName(roleName)).thenReturn(Optional.ofNullable(roleEntity));
+
+        Optional<RoleEntity> result = roleRepository.findByRoleName(roleName);
+
+        assertEquals(roleName, result.get().getRoleName());
+        assertEquals(1L, result.get().getId());
+    }
+
     @Test
     @DisplayName("create role in repository")
     public void createRoleTest() {
 
         RoleEntity roleEntity = new RoleEntity();
-        roleEntity.setRoleName(Roles.ADMIN_ROLE);
+        roleEntity.setRoleName(Roles.ROLE_ADMIN);
 
         when(roleRepository.save(any(RoleEntity.class))).thenReturn(roleEntity);
 
         RoleEntity savedRole = roleRepository.save(roleEntity);
 
-        assertEquals(Roles.ADMIN_ROLE, savedRole.getRoleName());
+        assertEquals(Roles.ROLE_ADMIN, savedRole.getRoleName());
     }
 
     @Test
     @DisplayName("Find By Id in repository")
     public void findRoleByIdTest() {
-        RoleEntity roleEntity = new RoleEntity(1L, Roles.CLIENT_ROLE);
+        RoleEntity roleEntity = new RoleEntity(1L, Roles.ROLE_CLIENT);
 
         Mockito.when(roleRepository.findById(1L)).thenReturn(Optional.of(roleEntity));
 
         Optional<RoleEntity> foundRoleEntity = roleRepository.findById(1L);
 
         assertTrue(foundRoleEntity.isPresent());
-        assertEquals(Roles.CLIENT_ROLE, foundRoleEntity.get().getRoleName());
+        assertEquals(Roles.ROLE_CLIENT, foundRoleEntity.get().getRoleName());
         assertEquals(1L, foundRoleEntity.get().getId());
 
     }
@@ -58,7 +83,7 @@ public class RoleRepositoryTest {
     @DisplayName("Delete By Id in repository")
     public void deleteByIdTest() {
 
-        RoleEntity roleEntity = new RoleEntity(1L, Roles.WORKER_ROLE);
+        RoleEntity roleEntity = new RoleEntity(1L, Roles.ROLE_WORKER);
 
         doNothing().when(roleRepository).deleteById(1L);
 

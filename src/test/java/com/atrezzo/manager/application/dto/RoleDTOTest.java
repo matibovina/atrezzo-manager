@@ -1,14 +1,12 @@
-package com.atrezzo.manager.domain.model;
+package com.atrezzo.manager.application.dto;
 
 import com.atrezzo.manager.domain.model.enums.Roles;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class RoleTest {
+public class RoleDTOTest {
 
     @Test
     @DisplayName("create role")
@@ -16,7 +14,7 @@ public class RoleTest {
         Long id = 1L;
         Roles roleName = Roles.ROLE_ADMIN;
 
-        Role role = new Role(id, roleName);
+        RoleDTO role = new RoleDTO(id, roleName);
 
         assertEquals(id, role.getId());
         assertEquals(roleName, role.getRoleName());
