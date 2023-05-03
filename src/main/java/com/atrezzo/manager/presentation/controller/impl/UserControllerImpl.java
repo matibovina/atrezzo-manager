@@ -1,6 +1,6 @@
 package com.atrezzo.manager.presentation.controller.impl;
 
-import com.atrezzo.manager.application.dto.ChangePasswordRequest;
+import com.atrezzo.manager.application.util.ChangePasswordRequest;
 import com.atrezzo.manager.application.dto.UserDTO;
 import com.atrezzo.manager.application.service.UserService;
 import com.atrezzo.manager.domain.model.User;

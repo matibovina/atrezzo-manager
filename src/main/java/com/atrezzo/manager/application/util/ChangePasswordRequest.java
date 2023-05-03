@@ -1,4 +1,4 @@
-package com.atrezzo.manager.application.dto;
+package com.atrezzo.manager.application.util;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

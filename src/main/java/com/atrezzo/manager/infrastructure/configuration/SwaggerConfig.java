@@ -1,4 +1,3 @@
-/*
 package com.atrezzo.manager.infrastructure.configuration;
 
 import org.springdoc.core.models.GroupedOpenApi;
@@ -9,20 +8,19 @@ import org.springframework.context.annotation.Configuration;
 public class SwaggerConfig {
 
     @Bean
-    public GroupedOpenApi publicApi() {
+    public GroupedOpenApi usersApi() {
         return GroupedOpenApi.builder()
-                .group("public")
-                .pathsToMatch("/api/public/**")
+                .group("users")
+                .pathsToMatch("/api/users/**")
                 .build();
     }
 
     @Bean
-    public GroupedOpenApi adminApi() {
+    public GroupedOpenApi rolesApi() {
         return GroupedOpenApi.builder()
-                .group("admin")
-                .pathsToMatch("/api/admin/**")
+                .group("roles")
+                .pathsToMatch("/api/roles/**")
                 .build();
     }
 
 }
-*/

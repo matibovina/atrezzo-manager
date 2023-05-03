@@ -1,9 +1,8 @@
 package com.atrezzo.manager.presentation.controller.impl;
 
-import com.atrezzo.manager.application.dto.ChangePasswordRequest;
+import com.atrezzo.manager.application.util.ChangePasswordRequest;
 import com.atrezzo.manager.application.dto.UserDTO;
 import com.atrezzo.manager.application.service.impl.UserServiceImpl;
-import com.atrezzo.manager.application.service.impl.UserServiceImplTest;
 import com.atrezzo.manager.domain.model.Role;
 import com.atrezzo.manager.domain.model.User;
 import com.atrezzo.manager.domain.model.UserRole;
@@ -17,7 +16,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 

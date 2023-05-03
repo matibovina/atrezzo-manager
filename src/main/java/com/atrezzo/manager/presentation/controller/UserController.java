@@ -1,6 +1,6 @@
 package com.atrezzo.manager.presentation.controller;
 
-import com.atrezzo.manager.application.dto.ChangePasswordRequest;
+import com.atrezzo.manager.application.util.ChangePasswordRequest;
 import com.atrezzo.manager.application.dto.UserDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
