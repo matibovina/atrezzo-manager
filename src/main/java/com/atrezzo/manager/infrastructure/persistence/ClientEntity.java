@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 
 @Getter
 @Setter
@@ -51,7 +53,8 @@ public class ClientEntity {
 
     private Boolean enabled;
 
-    //private List<ContactEntity> contacts;
+    @OneToMany(mappedBy = "client")
+    private List<ContactEntity> contacts;
 
     //private List<QuotesEntity> quotes;
 

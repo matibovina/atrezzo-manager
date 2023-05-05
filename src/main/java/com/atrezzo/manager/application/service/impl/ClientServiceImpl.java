@@ -77,12 +77,16 @@ public class ClientServiceImpl implements ClientService {
 
 
         ClientEntity newClient = modelMapper.map(client, ClientEntity.class);
-        if(client.getAddress() != null) {
-            AddressEntity newAddress = newClient.getAddress();
-        }
 
         try {
+            if(client.getAddress() != null) {
+                AddressEntity newAddress = newClient.getAddress();
+                addressRepository.save(newAddress);
+                newClient.setAddress(newAddress);
+            }
+
             clientRepository.save(newClient);
+
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }

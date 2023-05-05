@@ -31,4 +31,12 @@ public class SwaggerConfig {
                 .build();
     }
 
+    @Bean
+    public GroupedOpenApi contactsApi() {
+        return GroupedOpenApi.builder()
+                .group("contacts")
+                .pathsToMatch("/api/contacts/**")
+                .build();
+    }
+
 }
