@@ -4,7 +4,9 @@ package com.atrezzo.manager.application.service.impl;
 import com.atrezzo.manager.domain.model.Address;
 import com.atrezzo.manager.domain.model.Client;
 import com.atrezzo.manager.domain.model.User;
+import com.atrezzo.manager.domain.repository.AddressRepository;
 import com.atrezzo.manager.domain.repository.ClientRepository;
+import com.atrezzo.manager.infrastructure.persistence.AddressEntity;
 import com.atrezzo.manager.infrastructure.persistence.ClientEntity;
 import com.atrezzo.manager.infrastructure.persistence.UserEntity;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,6 +17,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
+import org.springframework.web.multipart.MultipartFile;
+
 
 import java.util.*;
 
@@ -28,6 +32,8 @@ public class ClientServiceImplTest {
 
     @Mock
     ClientRepository clientRepository;
+    @Mock
+    AddressRepository addressRepository;
 
     @InjectMocks
     ClientServiceImpl clientService;
@@ -44,8 +50,13 @@ public class ClientServiceImplTest {
 
     UserEntity userEntity1;
 
+    MultipartFile profilePicture;
+
     @BeforeEach
     void setup() {
+
+        profilePicture = mock(MultipartFile.class);
+
 
         clientModel = new Client();
         clientModel.setId(1L);
@@ -88,17 +99,13 @@ public class ClientServiceImplTest {
     @DisplayName("Create Client - Success")
     void createClientTest() {
         clientEntity = modelMapper.map(clientModel, ClientEntity.class);
-        System.out.println(clientEntity.getUser().getUsername());
-        System.out.println(clientEntity.getUser().getPassword());
 
         when(clientRepository.save(any(ClientEntity.class))).thenReturn(modelMapper.map(clientModel, ClientEntity.class));
 
-        Client response = clientService.createClient(clientModel, address);
+        Client response = clientService.createClient(clientModel);
 
         assertNotNull(response);
         assertEquals(clientModel.getId(), response.getId());
-        System.out.println(response.getUser().getUsername());
-        System.out.println(clientEntity.getUser().getUsername());
 
         assertEquals(clientEntity.getUser().getId(), response.getUser().getId());
         assertEquals(clientEntity.getUser().getUsername(), response.getUser().getUsername());
@@ -114,7 +121,7 @@ public class ClientServiceImplTest {
     void createClientWithNullTest() {
 
         assertThrows(IllegalArgumentException.class, () -> {
-            clientService.createClient(null, null);
+            clientService.createClient(null);
         });
     }
 
@@ -159,19 +166,13 @@ public class ClientServiceImplTest {
         assertEquals(0, clients.size());
 
         verify(clientRepository, times(1)).findAll();
-
-
     }
-
-
 
     //    find by id
     @Test
     @DisplayName("Find Client By Id - Success")
     void findByIdTest() {
-
         Long id = 1L;
-
         when(clientRepository.findById(id)).thenReturn(Optional.of(modelMapper.map(clientModel, ClientEntity.class)));
 
         Client foundClient = clientService.findById(id);
@@ -196,7 +197,6 @@ public class ClientServiceImplTest {
     @Test
     @DisplayName("Find Client By User - Success")
     void findClientByUserTest() {
-
         when(clientRepository.findByUser(userEntity1)).thenReturn(Optional.of(modelMapper.map(clientModel, ClientEntity.class)));
 
         Client foundClient = clientService.findClientByUser(userModel);
@@ -205,15 +205,12 @@ public class ClientServiceImplTest {
         assertEquals(clientModel.getUser(), foundClient.getUser());
 
         verify(clientRepository, times(1)).findByUser(userEntity1);
-
     }
-
 
     //    find by cuit number
     @Test
     @DisplayName("Find Client by CUIT - Success")
     void findClientByCuitTest() {
-
         String cuitNumber = "123456789";
 
         when(clientRepository.findByCuitNumber(cuitNumber)).thenReturn(Optional.of(modelMapper.map(clientModel, ClientEntity.class)));
@@ -231,7 +228,6 @@ public class ClientServiceImplTest {
     @Test
     @DisplayName("Find Client by Company Name - Success")
     void findClientByCompanyNameTest() {
-
         String companyName = "Siglo21";
 
         when(clientRepository.findByCompanyName(companyName)).thenReturn(Optional.of(modelMapper.map(clientModel, ClientEntity.class)));
@@ -243,7 +239,6 @@ public class ClientServiceImplTest {
         assertEquals(clientModel.getCompanyName(), foundClient.getCompanyName());
 
         verify(clientRepository, times(1)).findByCompanyName(companyName);
-
     }
 
 
@@ -252,7 +247,6 @@ public class ClientServiceImplTest {
     @Test
     @DisplayName("Find Client by Legal Name - Success")
     void findClientByLegalNameTest() {
-
         String legalName = "universidad SA";
 
         when(clientRepository.findByLegalName(legalName)).thenReturn(Optional.of(modelMapper.map(clientModel, ClientEntity.class)));
@@ -265,20 +259,17 @@ public class ClientServiceImplTest {
         assertEquals(clientModel.getLegalName(), foundClient.getLegalName());
 
         verify(clientRepository, times(1)).findByLegalName(legalName);
-
     }
-
 
     //    update client
     @Test
     @DisplayName("Update Client - Success")
     void updateClientTest() {
-
         when(clientRepository.existsById(clientModel.getId())).thenReturn(true);
 
         when(clientRepository.save(any(ClientEntity.class))).thenReturn(modelMapper.map(clientModel, ClientEntity.class));
-
-        Client updatedClient = clientService.updateClient(clientModel, address);
+        when(addressRepository.save(any(AddressEntity.class))).thenReturn(modelMapper.map(address, AddressEntity.class));
+        Client updatedClient = clientService.updateClient(clientModel);
 
         assertNotNull(updatedClient);
         assertNotNull(updatedClient);
@@ -286,16 +277,13 @@ public class ClientServiceImplTest {
         assertEquals(clientModel.getEmail(), updatedClient.getEmail());
         assertEquals(clientModel.getEmail(), updatedClient.getEmail());
         assertEquals(clientModel.getAddress().getId(), updatedClient.getAddress().getId());
-
-
     }
 
 
-//    delete client
+    //    delete client
     @Test
     @DisplayName("Delete Client by Id - Success")
     void deleteClientByIdTest() {
-
         Long id = 1L;
         when(clientRepository.existsById(id)).thenReturn(true);
         doNothing().when(clientRepository).deleteById(id);

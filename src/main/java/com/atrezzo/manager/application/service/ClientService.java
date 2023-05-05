@@ -1,7 +1,6 @@
 package com.atrezzo.manager.application.service;
 
 import com.atrezzo.manager.application.util.ClientSearchCriteria;
-import com.atrezzo.manager.domain.model.Address;
 import com.atrezzo.manager.domain.model.Client;
 import com.atrezzo.manager.domain.model.User;
 
@@ -9,7 +8,7 @@ import java.util.List;
 
 public interface ClientService {
 
-   Client createClient(Client client, Address address);
+   Client createClient(Client client);
 
    List<Client> findAll();
 
@@ -25,7 +24,7 @@ public interface ClientService {
 
     Client findClient(ClientSearchCriteria searchCriteria);
 
-    Client updateClient(Client client, Address address);
+    Client updateClient(Client client);
 
     void deleteClientById(Long id);
 

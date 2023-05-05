@@ -1,26 +1,24 @@
 package com.atrezzo.manager.presentation.controller;
 
+import com.atrezzo.manager.application.dto.ClientDTO;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import org.springframework.http.ResponseEntity;
+
 public interface ClientController {
 
+    ResponseEntity<?> createClient(ClientDTO clientDTO);
 
-    //POST - Create Client
+    ResponseEntity<?> findAllClients();
 
-    //GET - Find all Clients
+    ResponseEntity<?> findClientById(Long id);
 
-    //GET - Find client by Id
+    ResponseEntity<?> findClientByCuit(String cuitNumber);
 
-    //GET - Find client by CuitNUmber
+    ResponseEntity<?> findClientByLegalName(String legalName);
 
-    //GET - Find client by LegalName
+    ResponseEntity<?> findClientByCompanyName(String companyName);
 
-    //GET - Find client by CompanyName
+    ResponseEntity<?> updateClient(ClientDTO clientDTO) throws JsonProcessingException;
 
-    //GET - Find client by User
-
-    //PUT - Update Client
-
-    //DELETE - Delete Client by Id
-
-    
-
+    ResponseEntity<?> deleteClientById(Long id);
 }

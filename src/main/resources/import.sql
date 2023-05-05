@@ -23,3 +23,20 @@ INSERT INTO user_role (id, user_id, role_id) VALUES (7, 7, 1);
 INSERT INTO user_role (id, user_id, role_id) VALUES (8, 8, 1);
 INSERT INTO user_role (id, user_id, role_id) VALUES (9, 9, 2);
 INSERT INTO user_role (id, user_id, role_id) VALUES (10, 10, 3);
+
+
+-- Insert addresses for clients 3 to 8
+INSERT INTO address (id, street, street_number, city, postal_code, country) VALUES (3, 'High St', '23', 'Sky City', '23456', 'Skyland');
+INSERT INTO address (id, street, street_number, city, postal_code, country) VALUES (4, 'Green Ave', '54', 'Nature Town', '34567', 'Greenland');
+INSERT INTO address (id, street, street_number, city, postal_code, country) VALUES (5, 'Water Way', '78', 'Aqua City', '45678', 'Waterland');
+INSERT INTO address (id, street, street_number, city, postal_code, country) VALUES (6, 'Health St', '90', 'Healthville', '56789', 'Healthland');
+INSERT INTO address (id, street, street_number, city, postal_code, country) VALUES (7, 'Light Ave', '61', 'Bright City', '67890', 'Lightland');
+INSERT INTO address (id, street, street_number, city, postal_code, country) VALUES (8, 'Ocean Dr', '72', 'Breeze City', '78901', 'Oceanland');
+
+-- Update clients 3 to 8 with their corresponding address_id
+INSERT INTO clients (id, company_name, legal_name, cuit_number, tax_condition, email, phone, address_id, enabled) VALUES (3, 'SkyHigh Innovations', 'SkyHigh Corp.', '20-33445566-8', 'MONOTRIBUTO', 'skyhigh@email.com', '+1 555-135792', 3, 1);
+INSERT INTO clients (id, company_name, legal_name, cuit_number, tax_condition, email, phone, address_id, enabled) VALUES (4, 'NatureVibes Organics', 'NatureVibes Ltd.', '27-88776655-9', 'MONOTRIBUTO', 'naturevibes@email.com', '+1 555-246813', 4, 1);
+INSERT INTO clients (id, company_name, legal_name, cuit_number, tax_condition, email, phone, address_id, enabled) VALUES (5, 'AquaPurity Water', 'AquaPurity Inc.', '23-11223344-0', 'EXENTO', 'aquapurity@email.com', '+1 555-102938', 5, 1);
+INSERT INTO clients (id, company_name, legal_name, cuit_number, tax_condition, email, phone, address_id, enabled) VALUES (6, 'HealthGuard Pharmaceuticals', 'HealthGuard Pharma LLC', '34-22334455-1', 'EXENTO', 'healthguard@email.com', '+1 555-465789', 6, 1);
+INSERT INTO clients (id, company_name, legal_name, cuit_number, tax_condition, email, phone, address_id, enabled) VALUES (7, 'BrightLight Solar', 'BrightLight Energy LLC', '31-55667788-2', 'RESPONSABLE_INSCRIPTO', 'brightlight@email.com', '+1 555-987123', 7, 1);
+

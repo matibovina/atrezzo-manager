@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
@@ -34,6 +35,8 @@ public class Client {
     private User user;
 
     private String profilePicture;
+
+    private Boolean enabled;
 
     //private List<Contact> contacts;
 

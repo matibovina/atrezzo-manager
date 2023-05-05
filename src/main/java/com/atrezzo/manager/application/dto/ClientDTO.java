@@ -2,6 +2,9 @@ package com.atrezzo.manager.application.dto;
 
 import com.atrezzo.manager.domain.model.Address;
 import com.atrezzo.manager.domain.model.User;
+import com.atrezzo.manager.domain.model.enums.TaxCondition;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +16,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+import org.springframework.web.multipart.MultipartFile;
 
 
 @Getter
@@ -31,25 +34,20 @@ public class ClientDTO implements Serializable {
 
         private String cuitNumber;
 
-        //private TaxCondition taxCondition;
+        @Enumerated(EnumType.STRING)
+        private TaxCondition taxCondition;
 
         private String email;
 
         private String phone;
 
-        private Address address;
+        private AddressDTO address;
 
-        private User user;
+        private UserDTO user;
 
-        private String profilePicture;
+        private MultipartFile profilePicture;
 
-        //private List<Contact> contacts;
-
-        //private List<Quotes> quotes;
-
-        //private List<Invoice> invoices;
-
-        //private List<Event> events;
+        private Boolean enabled;
 
 
     @Serial

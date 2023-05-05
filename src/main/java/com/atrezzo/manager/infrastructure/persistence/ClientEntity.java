@@ -3,12 +3,14 @@ package com.atrezzo.manager.infrastructure.persistence;
 
 import com.atrezzo.manager.domain.model.Address;
 import com.atrezzo.manager.domain.model.User;
+import com.atrezzo.manager.domain.model.enums.TaxCondition;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @Getter
@@ -29,14 +31,15 @@ public class ClientEntity {
 
     private String cuitNumber;
 
-    //private TaxCondition taxCondition;
+    @Enumerated(EnumType.STRING)
+    private TaxCondition taxCondition;
 
     @Email
     private String email;
 
     private String phone;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private AddressEntity address;
 
@@ -45,6 +48,8 @@ public class ClientEntity {
     private UserEntity user;
 
     private String profilePicture;
+
+    private Boolean enabled;
 
     //private List<ContactEntity> contacts;
 

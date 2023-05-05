@@ -1,8 +1,8 @@
 package com.atrezzo.manager.application.service.impl;
 
 import com.atrezzo.manager.application.service.ClientService;
+import com.atrezzo.manager.application.service.FileStorageService;
 import com.atrezzo.manager.application.util.ClientSearchCriteria;
-import com.atrezzo.manager.domain.model.Address;
 import com.atrezzo.manager.domain.model.Client;
 import com.atrezzo.manager.domain.model.User;
 import com.atrezzo.manager.domain.repository.AddressRepository;
@@ -17,13 +17,19 @@ import java.util.regex.Pattern;
 
 import com.atrezzo.manager.infrastructure.persistence.UserEntity;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class ClientServiceImpl implements ClientService {
 
 
+
+    @Autowired
+    private FileStorageService fileStorageService;
     private final ClientRepository clientRepository;
 
     private final AddressRepository addressRepository;
@@ -46,7 +52,7 @@ public class ClientServiceImpl implements ClientService {
 
 
     @Override
-    public Client createClient(Client client, Address address) {
+    public Client createClient(Client client) {
 
         if (client == null || client.getEmail() == null) {
             throw new IllegalArgumentException("Client or client email can't be null.");
@@ -70,11 +76,10 @@ public class ClientServiceImpl implements ClientService {
         });
 
 
-
-        AddressEntity newAddress = modelMapper.map(address, AddressEntity.class);
-
         ClientEntity newClient = modelMapper.map(client, ClientEntity.class);
-        newClient.setAddress(newAddress);
+        if(client.getAddress() != null) {
+            AddressEntity newAddress = newClient.getAddress();
+        }
 
         try {
             clientRepository.save(newClient);
@@ -103,7 +108,7 @@ public class ClientServiceImpl implements ClientService {
         }
 
         ClientEntity foundClient = clientRepository.findById(id).orElseThrow(
-                () -> new NoClientsFoundException("Client don't exist.")
+                () -> new NoClientsFoundException("Client doesn't exist.")
         );
 
         return modelMapper.map(foundClient, Client.class);
@@ -194,7 +199,7 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public Client updateClient(Client client, Address address) {
+    public Client updateClient(Client client) {
 
         if (client == null || client.getEmail() == null) {
             throw new IllegalArgumentException("Client or client email can't be null.");
@@ -213,13 +218,13 @@ public class ClientServiceImpl implements ClientService {
         }
 
 
-        AddressEntity updatedAddress = modelMapper.map(address, AddressEntity.class);
-
         ClientEntity updatedClient = modelMapper.map(client, ClientEntity.class);
-        updatedClient.setAddress(updatedAddress);
+        AddressEntity updatedAddress = updatedClient.getAddress();
+
 
         try {
             clientRepository.save(updatedClient);
+            addressRepository.save(updatedAddress);
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
@@ -237,7 +242,7 @@ public class ClientServiceImpl implements ClientService {
         if(clientRepository.existsById(id)) {
             clientRepository.deleteById(id);
         } else {
-            throw new NoClientsFoundException("Client doesn't exist with id " + id);
+            throw new NoClientsFoundException("Client doesn't exists with id " + id);
         }
     }
 }
