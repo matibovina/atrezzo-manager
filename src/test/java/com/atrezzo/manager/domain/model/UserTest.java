@@ -14,10 +14,6 @@ public class UserTest {
     @DisplayName("create user")
     void createUserTest(){
 
-        Role role1 = new Role();
-        role1.setId(1L);
-        role1.setRoleName(Roles.ADMIN_ROLE);
-
         User user1 = new User();
         user1.setId(1L);
         user1.setUsername("matibovina");
@@ -29,6 +25,5 @@ public class UserTest {
         assertEquals("matias@matias.com", user1.getEmail());
         assertEquals("123456", user1.getPassword());
     }
-
 
 }

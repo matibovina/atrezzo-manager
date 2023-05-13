@@ -17,25 +17,20 @@ import java.util.stream.Collectors;
 @Service
 public class RoleServiceImpl implements RoleService {
 
+    ModelMapper modelMapper = new ModelMapper();
     @Autowired
     private RoleRepository roleRepository;
 
-    ModelMapper modelMapper = new ModelMapper();
-
-
     @Override
     public RoleDTO createRole(RoleDTO roleDTO) throws IllegalArgumentException {
-
-        if (roleDTO == null || roleDTO.getRoleName() == null || roleDTO.getRoleName().toString().trim().isEmpty()) {
+        if (roleDTO == null || roleDTO.getRoleName() == null) {
             throw new IllegalArgumentException("Role name cannot be null or empty.");
         }
-        Optional<RoleEntity> existingRole = roleRepository.findByRoleName(String.valueOf(roleDTO.getRoleName()));
-        if(existingRole.isPresent()){
-            throw  new IllegalArgumentException("Already exists a role with that name");
+        Optional<RoleEntity> existingRole = roleRepository.findByRoleName(roleDTO.getRoleName());
+        if (existingRole.isPresent()) {
+            throw new IllegalArgumentException("Already exists a role with that name");
         }
-        RoleEntity roleEntity = new RoleEntity();
-        roleEntity = modelMapper.map(roleDTO, RoleEntity.class);
-
+        RoleEntity roleEntity = modelMapper.map(roleDTO, RoleEntity.class);
         roleRepository.save(roleEntity);
 
         return modelMapper.map(roleEntity, RoleDTO.class);
@@ -44,11 +39,11 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public RoleDTO findRoleById(Long id) throws NoRolesFoundException {
 
-        if(id.equals(null) || id < 0) {
-            throw new IllegalArgumentException("El valor de id es incorrecto.");
+        if (id.equals(null) || id < 0) {
+            throw new IllegalArgumentException("ID value is incorrect " + id);
         }
 
-        RoleEntity roleEntity = roleRepository.findById(id).orElseThrow(() ->new NoRolesFoundException("Role no existe."));
+        RoleEntity roleEntity = roleRepository.findById(id).orElseThrow(() -> new NoRolesFoundException("Role no existe."));
 
 
         return modelMapper.map(roleEntity, RoleDTO.class);
@@ -64,11 +59,9 @@ public class RoleServiceImpl implements RoleService {
         }
 
         try {
-            List<RoleDTO> roleDTOS = roleEntities.stream().map(
-                    roleEntity -> modelMapper.map(roleEntity, RoleDTO.class)
-            ).collect(Collectors.toList());
+            List<RoleDTO> roleDTOS = roleEntities.stream().map(roleEntity -> modelMapper.map(roleEntity, RoleDTO.class)).collect(Collectors.toList());
 
-            if(roleDTOS == null || roleDTOS.isEmpty()) {
+            if (roleDTOS == null || roleDTOS.isEmpty()) {
                 throw new NoRolesFoundException("Error al mapear roles a DTO.");
             }
 
@@ -81,7 +74,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public RoleDTO updateRole(Long id, RoleDTO roleDTO) throws NoRolesFoundException {
 
-        if(roleDTO == null || roleDTO.getRoleName() == null || roleDTO.getRoleName().toString().trim().isEmpty() || roleDTO.getId() == null) {
+        if (roleDTO == null || roleDTO.getRoleName() == null || roleDTO.getRoleName().toString().trim().isEmpty() || roleDTO.getId() == null) {
             throw new NoRolesFoundException("El campo roleName no puede estar vacio o nulo");
         }
 
@@ -99,10 +92,10 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public void deleteRoleById(Long id) throws NoRolesFoundException {
 
-        if(id == null || id <= 0) {
+        if (id == null || id <= 0) {
             throw new IllegalArgumentException("El id no puede ser nulo o menor o igual a 0");
         }
-        if(!roleRepository.existsById(id)){
+        if (!roleRepository.existsById(id)) {
             throw new NoRolesFoundException("El rol con " + id + " no existe.");
         }
         roleRepository.deleteById(id);

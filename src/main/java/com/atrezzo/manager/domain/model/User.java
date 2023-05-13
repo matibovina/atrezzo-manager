@@ -1,9 +1,12 @@
 package com.atrezzo.manager.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.swing.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -19,5 +22,11 @@ public class User {
 
     private String password;
 
-    private List<Role> roles;
+    @JsonIgnore
+    private List<UserRole> roles;
+
+    private Boolean enabled;
+
+    private LocalDateTime creationDate;
+
 }

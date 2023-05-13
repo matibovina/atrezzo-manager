@@ -1,26 +1,49 @@
 package com.atrezzo.manager.infrastructure.configuration;
 
-
-import org.springdoc.core.GroupedOpenApi;
-import org.springframework.beans.factory.annotation.Value;
+import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.reactive.config.EnableWebFlux;
 
 @Configuration
-@EnableWebFlux
 public class SwaggerConfig {
 
-    @Value("${springdoc.packagesToScan}")
-    private String packagesToScan;
-
+    @Bean
+    public GroupedOpenApi usersApi() {
+        return GroupedOpenApi.builder()
+                .group("users")
+                .pathsToMatch("/api/users/**")
+                .build();
+    }
 
     @Bean
-    public GroupedOpenApi publicApi() {
+    public GroupedOpenApi rolesApi() {
         return GroupedOpenApi.builder()
-                .group("public")
-                .pathsToMatch("/**")
-                .packagesToScan(packagesToScan)
+                .group("roles")
+                .pathsToMatch("/api/roles/**")
+                .build();
+    }
+
+    @Bean
+    public GroupedOpenApi clientsApi() {
+        return GroupedOpenApi.builder()
+                .group("clients")
+                .pathsToMatch("/api/clients/**")
+                .build();
+    }
+
+    @Bean
+    public GroupedOpenApi contactsApi() {
+        return GroupedOpenApi.builder()
+                .group("contacts")
+                .pathsToMatch("/api/contacts/**")
+                .build();
+    }
+
+    @Bean
+    public GroupedOpenApi workerApi() {
+        return GroupedOpenApi.builder()
+                .group("workers")
+                .pathsToMatch("/api/workers/**")
                 .build();
     }
 
