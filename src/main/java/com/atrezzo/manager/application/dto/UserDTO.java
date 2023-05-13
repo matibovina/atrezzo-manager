@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDTO implements Serializable {
+
 
     private Long id;
 
@@ -32,4 +34,7 @@ public class UserDTO implements Serializable {
 
     private String roleName;
 
+
+    @Serial
+    private static final long serialVersionUID = -971332095972429869L;
 }

@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 @Data
@@ -14,9 +15,12 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class RoleDTO implements Serializable {
 
-   private Long id;
+
+    private Long id;
 
     @Enumerated(EnumType.STRING)
     private Roles roleName;
 
+    @Serial
+    private static final long serialVersionUID = 4833527155511237476L;
 }
