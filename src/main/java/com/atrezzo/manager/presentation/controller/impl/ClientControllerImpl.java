@@ -156,12 +156,12 @@ public class ClientControllerImpl implements ClientController {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Client not found");
             }
 
-            String profilePicturePath = fileStorageService.storeFile(file, "client/profile_pictures");
+            String profilePicturePath = fileStorageService.storeFile(file, "client/profile_pictures", client.getId());
             client.setProfilePicture(profilePicturePath);
 
             clientService.updateClient(client);
 
-            return ResponseEntity.ok().build();
+            return ResponseEntity.ok().body("Profile picture saved with success to " + client.getCompanyName() + "picture name " + client.getProfilePicture());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while updating the profile picture");
         }

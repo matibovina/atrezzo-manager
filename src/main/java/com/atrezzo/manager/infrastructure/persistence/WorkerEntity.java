@@ -41,6 +41,8 @@ public class WorkerEntity {
     @Temporal(TemporalType.DATE)
     private Date birthDate;
 
+    private String profilePicture;
+
     // private List<ServiceEntity> services;
     //private List<EventEntity> events;
     // private List<SessionServiceEntity> sessionServices;

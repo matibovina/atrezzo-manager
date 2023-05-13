@@ -27,4 +27,6 @@ public class Worker {
     // private List<SessionService> sessionServices;
     // private List<Invoice> invoices;
     private Date birthDate;
+
+    private String profilePicture;
 }

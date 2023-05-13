@@ -29,7 +29,7 @@ public class FileStorageServiceImpl implements FileStorageService {
         }    }
 
     @Override
-    public String storeFile(MultipartFile file, String subdirectory) {
+    public String storeFile(MultipartFile file, String dir, Long id) {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
 
         // Check if the file has a png or jpg extension
@@ -37,23 +37,24 @@ public class FileStorageServiceImpl implements FileStorageService {
         if (!fileExtension.equals("png") && !fileExtension.equals("jpg")) {
             throw new RuntimeException("Only PNG and JPG images are allowed.");
         }
+        String newFileName = "id_" + id + "_profile_picture." + fileExtension;
 
         try {
-            if (fileName.contains("..")) {
+            if (newFileName.contains("..")) {
                 throw new RuntimeException("Invalid file path.");
             }
 
             // Create subdirectory if it does not exist
-            Path targetDirectory = this.fileStorageLocation.resolve(subdirectory);
+            Path targetDirectory = this.fileStorageLocation.resolve(dir);
             if (!Files.exists(targetDirectory)) {
                 Files.createDirectories(targetDirectory);
             }
 
             // Store the file in the subdirectory
-            Path targetLocation = targetDirectory.resolve(fileName);
+            Path targetLocation = this.fileStorageLocation.resolve(Paths.get(dir, newFileName));
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
-            return subdirectory + "/" + fileName;
+            return dir + "/" + newFileName;
         } catch (IOException e) {
             throw new RuntimeException("Could not store file." + e.getMessage());
         }
@@ -62,7 +63,8 @@ public class FileStorageServiceImpl implements FileStorageService {
     @Override
     public Resource loadFileAsResource(String fileName, String dir) {
         try {
-            Path filePath = this.fileStorageLocation.resolve(Paths.get(dir, fileName)).normalize();
+            Path filePath = this.fileStorageLocation.resolve(Paths.get(fileName)).normalize();
+
             Resource resource = new UrlResource(filePath.toUri());
             if (resource.exists()) {
                 return resource;
@@ -71,6 +73,8 @@ public class FileStorageServiceImpl implements FileStorageService {
             }
         } catch (MalformedURLException e) {
             throw new RuntimeException("File not found."+ e.getMessage());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
     }
