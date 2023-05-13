@@ -4,10 +4,10 @@ import com.atrezzo.manager.application.dto.WorkerDTO;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-@RequestMapping("api/workers")
 public interface WorkerController {
 
     ResponseEntity<WorkerDTO> createWorker(@RequestBody WorkerDTO workerDTO);
@@ -23,5 +23,9 @@ public interface WorkerController {
     ResponseEntity<WorkerDTO> updateWorker(@PathVariable Long id, @RequestBody WorkerDTO workerDTO);
 
     ResponseEntity<?> deleteWorker(@PathVariable Long id);
+
+    public ResponseEntity<?> updateProfilePicture(Long id, MultipartFile file);
+
+    ResponseEntity<?> getProfilePicture(Long id);
 
 }

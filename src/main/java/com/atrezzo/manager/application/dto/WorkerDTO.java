@@ -26,4 +26,6 @@ public class WorkerDTO {
    // private List<SessionServiceDTO> sessionServices;
    // private List<InvoiceDTO> invoices;
     private Date birthDate;
+
+    private String profilePicture;
 }
