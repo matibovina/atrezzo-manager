@@ -39,4 +39,12 @@ public class SwaggerConfig {
                 .build();
     }
 
+    @Bean
+    public GroupedOpenApi workerApi() {
+        return GroupedOpenApi.builder()
+                .group("workers")
+                .pathsToMatch("/api/workers/**")
+                .build();
+    }
+
 }

@@ -40,3 +40,24 @@ INSERT INTO clients (id, company_name, legal_name, cuit_number, tax_condition, e
 INSERT INTO clients (id, company_name, legal_name, cuit_number, tax_condition, email, phone, address_id, enabled) VALUES (6, 'HealthGuard Pharmaceuticals', 'HealthGuard Pharma LLC', '34-22334455-1', 'EXENTO', 'healthguard@email.com', '+1 555-465789', 6, 1);
 INSERT INTO clients (id, company_name, legal_name, cuit_number, tax_condition, email, phone, address_id, enabled) VALUES (7, 'BrightLight Solar', 'BrightLight Energy LLC', '31-55667788-2', 'RESPONSABLE_INSCRIPTO', 'brightlight@email.com', '+1 555-987123', 7, 1);
 
+-- Workers Addresses
+
+INSERT INTO address (id, street, street_number, city, postal_code, country) VALUES (9, 'Mountain Rd', '10', 'Peakville', '89012', 'Mountainland');
+INSERT INTO address (id, street, street_number, city, postal_code, country) VALUES (10, 'Sunny Ln', '45', 'Sunshine City', '90123', 'Sunnyland');
+INSERT INTO address (id, street, street_number, city, postal_code, country) VALUES (11, 'Garden Ave', '32', 'Blossom Town', '01234', 'Gardenland');
+INSERT INTO address (id, street, street_number, city, postal_code, country) VALUES (12, 'Park Rd', '78', 'Green Park', '12345', 'Parkland');
+INSERT INTO address (id, street, street_number, city, postal_code, country) VALUES (13, 'Main St', '15', 'Central City', '23456', 'Mainland');
+INSERT INTO address (id, street, street_number, city, postal_code, country) VALUES (14, 'Sunset Blvd', '87', 'Twilight City', '34567', 'Sunsetland');
+INSERT INTO address (id, street, street_number, city, postal_code, country) VALUES (15, 'River Rd', '92', 'Riverside', '45678', 'Riverland');
+INSERT INTO address (id, street, street_number, city, postal_code, country) VALUES (16, 'Forest Dr', '27', 'Woodland', '56789', 'Forestland');
+
+
+-- Workers
+INSERT INTO workers (first_name, last_name, cuit_number, address_id, tax_condition, email, phone, birth_date) VALUES ('John', 'Doe', '1234567890', 9, 'RESPONSABLE_INSCRIPTO', 'john@example.com', '123456789', '1990-01-01');
+INSERT INTO workers (first_name, last_name, cuit_number, address_id, tax_condition, email, phone, birth_date) VALUES ('Jane', 'Smith', '9876543210', 10, 'MONOTRIBUTO', 'jane@example.com', '987654321', '1995-02-02');
+INSERT INTO workers (first_name, last_name, cuit_number, address_id, tax_condition, email, phone, birth_date) VALUES ('Mike', 'Johnson', '4567890123', 11, 'EXENTO', 'mike@example.com', '456789012', '1985-03-03');
+INSERT INTO workers (first_name, last_name, cuit_number, address_id, tax_condition, email, phone, birth_date) VALUES ('Emily', 'Williams', '0123456789', 12, 'RESPONSABLE_INSCRIPTO', 'emily@example.com', '012345678', '1992-04-04');
+INSERT INTO workers (first_name, last_name, cuit_number, address_id, tax_condition, email, phone, birth_date) VALUES ('David', 'Brown', '7890123456', 13, 'MONOTRIBUTO', 'david@example.com', '789012345', '1988-05-05');
+INSERT INTO workers (first_name, last_name, cuit_number, address_id, tax_condition, email, phone, birth_date) VALUES ('Sarah', 'Taylor', '2345678901', 14, 'EXENTO', 'sarah@example.com', '234567890', '1994-06-06');
+INSERT INTO workers (first_name, last_name, cuit_number, address_id, tax_condition, email, phone, birth_date) VALUES ('Michael', 'Anderson', '5678901234', 15, 'RESPONSABLE_INSCRIPTO', 'michael@example.com', '567890123', '1991-07-07');
+INSERT INTO workers (first_name, last_name, cuit_number, address_id, tax_condition, email, phone, birth_date) VALUES ('Olivia', 'Martinez', '8901234567', 16, 'MONOTRIBUTO', 'olivia@example.com', '890123456', '1987-08-08');

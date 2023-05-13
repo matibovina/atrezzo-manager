@@ -2,6 +2,7 @@ package com.atrezzo.manager.presentation.controller.impl;
 
 import com.atrezzo.manager.application.dto.ClientDTO;
 import com.atrezzo.manager.application.service.ClientService;
+import com.atrezzo.manager.application.service.FileStorageService;
 import com.atrezzo.manager.domain.model.Client;
 import com.atrezzo.manager.infrastructure.exceptions.NoClientsFoundException;
 import com.atrezzo.manager.presentation.controller.ClientController;
@@ -12,10 +13,13 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,6 +31,9 @@ public class ClientControllerImpl implements ClientController {
 
     @Autowired
     private ClientService clientService;
+
+    @Autowired
+    private FileStorageService fileStorageService;
 
     private ModelMapper modelMapper = new ModelMapper();
 
@@ -138,4 +145,43 @@ public class ClientControllerImpl implements ClientController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Client doesn´t exists.");
         }
     }
+
+    // ClientController.java
+
+    @PostMapping(value = "/client/{id}/profilePicture", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> updateProfilePicture(@PathVariable Long id, @RequestPart("file") MultipartFile file) {
+        try {
+            Client client = clientService.findById(id);
+            if (client == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Client not found");
+            }
+
+            String profilePicturePath = fileStorageService.storeFile(file, "client/profile_pictures");
+            client.setProfilePicture(profilePicturePath);
+
+            clientService.updateClient(client);
+
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while updating the profile picture");
+        }
+    }
+
+    @GetMapping("/client/{id}/profilePicture")
+    public ResponseEntity<?> getProfilePicture(@PathVariable Long id) {
+        try {
+            Client client = clientService.findById(id);
+            if (client == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Client not found");
+            }
+
+            String profilePicturePath = client.getProfilePicture();
+            Resource profilePicture = fileStorageService.loadFileAsResource(profilePicturePath, "client/profile_pictures");
+
+            return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(profilePicture);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while retrieving the profile picture");
+        }
+    }
+
 }

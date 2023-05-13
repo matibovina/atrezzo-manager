@@ -29,27 +29,40 @@ public class FileStorageServiceImpl implements FileStorageService {
         }    }
 
     @Override
-    public String storeFile(MultipartFile file) {
+    public String storeFile(MultipartFile file, String subdirectory) {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+
+        // Check if the file has a png or jpg extension
+        String fileExtension = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
+        if (!fileExtension.equals("png") && !fileExtension.equals("jpg")) {
+            throw new RuntimeException("Only PNG and JPG images are allowed.");
+        }
 
         try {
             if (fileName.contains("..")) {
                 throw new RuntimeException("Invalid file path.");
             }
 
-            Path targetLocation = this.fileStorageLocation.resolve(fileName);
+            // Create subdirectory if it does not exist
+            Path targetDirectory = this.fileStorageLocation.resolve(subdirectory);
+            if (!Files.exists(targetDirectory)) {
+                Files.createDirectories(targetDirectory);
+            }
+
+            // Store the file in the subdirectory
+            Path targetLocation = targetDirectory.resolve(fileName);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
 
-            return fileName;
+            return subdirectory + "/" + fileName;
         } catch (IOException e) {
-            throw new RuntimeException("Could not store file."+ e.getMessage());
+            throw new RuntimeException("Could not store file." + e.getMessage());
         }
     }
 
     @Override
-    public Resource loadFileAsResource(String fileName) {
+    public Resource loadFileAsResource(String fileName, String dir) {
         try {
-            Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
+            Path filePath = this.fileStorageLocation.resolve(Paths.get(dir, fileName)).normalize();
             Resource resource = new UrlResource(filePath.toUri());
             if (resource.exists()) {
                 return resource;
