@@ -8,9 +8,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,7 +27,8 @@ public class ContactControllerImpl implements ContactController {
 
 
     @Override
-    public ResponseEntity<?> addNewContact(ContactDTO contactDTO) {
+    @PostMapping(value = "/contacts", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> addNewContact(@RequestBody ContactDTO contactDTO) {
 
         try {
             Contact savedContact =  contactService.addNewContact(modelMapper.map(contactDTO, Contact.class));
@@ -38,7 +39,8 @@ public class ContactControllerImpl implements ContactController {
     }
 
     @Override
-    public ResponseEntity<?> findContactByNameOrCompany(String firstName, String lastName, String companyName) {
+    @GetMapping(value = "/contact/search", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> findContactByNameOrCompany(@RequestParam(required = false) String firstName,@RequestParam(required = false) String lastName,@RequestParam(required = false) String companyName) {
         try {
             Contact contact = contactService.findContact(firstName, lastName, companyName);
             return ResponseEntity.ok(modelMapper.map(contact, ContactDTO.class));
@@ -48,7 +50,8 @@ public class ContactControllerImpl implements ContactController {
     }
 
     @Override
-    public ResponseEntity<?> findContactById(Long id) {
+    @GetMapping(value = "/contact/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> findContactById(@PathVariable Long id) {
         try {
             Contact contact = contactService.findContactById(id);
             return ResponseEntity.ok(modelMapper.map(contact, ContactDTO.class));
@@ -58,7 +61,8 @@ public class ContactControllerImpl implements ContactController {
     }
 
     @Override
-    public ResponseEntity<?> findAllContactByPage(int pageNumber, int pageSize) {
+    @GetMapping(value = "/contacts", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> findAllContactByPage(@RequestParam int pageNumber,@RequestParam int pageSize) {
         try {
             Page<Contact> contactsPage = contactService.findAllContacts(pageNumber, pageSize);
             Page<ContactDTO> dtoPage = contactsPage.map(contact -> modelMapper.map(contact, ContactDTO.class));
@@ -69,7 +73,8 @@ public class ContactControllerImpl implements ContactController {
     }
 
     @Override
-    public ResponseEntity<?> findContactsByCompanyName(String companyName) {
+    @GetMapping(value = "/contacts/company", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> findContactsByCompanyName(@RequestParam String companyName) {
         try {
             List<Contact> contacts = contactService.findAllContactsByCompanyName(companyName);
             List<ContactDTO> dtoList = contacts.stream().map(contact -> modelMapper.map(contact, ContactDTO.class)).collect(Collectors.toList());
@@ -80,7 +85,8 @@ public class ContactControllerImpl implements ContactController {
     }
 
     @Override
-    public ResponseEntity<?> updateContact(ContactDTO contactDTO) {
+    @PutMapping(value = "/contact", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> updateContact(@RequestBody ContactDTO contactDTO) {
         try {
             Contact updatedContact = contactService.updateContact(modelMapper.map(contactDTO, Contact.class));
             return ResponseEntity.ok(modelMapper.map(updatedContact, ContactDTO.class));
@@ -90,7 +96,8 @@ public class ContactControllerImpl implements ContactController {
     }
 
     @Override
-    public ResponseEntity<?> deleteContactById(Long id) {
+    @DeleteMapping(value = "/contact/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> deleteContactById(@PathVariable Long id) {
         try {
             contactService.deleteContactById(id);
             return ResponseEntity.noContent().build();

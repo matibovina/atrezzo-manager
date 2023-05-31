@@ -59,8 +59,6 @@ public class WorkerServiceImpl implements WorkerService {
             addressRepository.save(newAddress);
             worker.setAddress(newAddress);
         }
-
-
         WorkerEntity savedWorker = workerRepository.save(worker);
         return modelMapper.map(savedWorker, WorkerDTO.class);
     }

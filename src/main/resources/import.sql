@@ -61,3 +61,56 @@ INSERT INTO workers (first_name, last_name, cuit_number, address_id, tax_conditi
 INSERT INTO workers (first_name, last_name, cuit_number, address_id, tax_condition, email, phone, birth_date) VALUES ('Sarah', 'Taylor', '2345678901', 14, 'EXENTO', 'sarah@example.com', '234567890', '1994-06-06');
 INSERT INTO workers (first_name, last_name, cuit_number, address_id, tax_condition, email, phone, birth_date) VALUES ('Michael', 'Anderson', '5678901234', 15, 'RESPONSABLE_INSCRIPTO', 'michael@example.com', '567890123', '1991-07-07');
 INSERT INTO workers (first_name, last_name, cuit_number, address_id, tax_condition, email, phone, birth_date) VALUES ('Olivia', 'Martinez', '8901234567', 16, 'MONOTRIBUTO', 'olivia@example.com', '890123456', '1987-08-08');
+
+-- Contacts
+
+-- Contactos para SkyHigh Innovations
+INSERT INTO contacts (client_id, first_name, last_name, phone, email, department, position, profile_picture) VALUES (3, 'John', 'Doe', '+1 555-111111', 'john.doe@email.com', 'Ventas', 'Representante', '');
+
+INSERT INTO contacts (client_id, first_name, last_name, phone, email, department, position, profile_picture) VALUES (3, 'Jane', 'Smith', '+1 555-222222', 'jane.smith@email.com', 'Soporte', 'Técnico', '');
+
+INSERT INTO contacts (client_id, first_name, last_name, phone, email, department, position, profile_picture) VALUES (3, 'Michael', 'Johnson', '+1 555-333333', 'michael.johnson@email.com', 'Administración', 'Contador', '');
+
+-- Contactos para NatureVibes Organics
+INSERT INTO contacts (client_id, first_name, last_name, phone, email, department, position, profile_picture) VALUES (4, 'Sarah', 'Williams', '+1 555-444444', 'sarah.williams@email.com', 'Marketing', 'Especialista', '');
+
+INSERT INTO contacts (client_id, first_name, last_name, phone, email, department, position, profile_picture) VALUES (4, 'David', 'Brown', '+1 555-555555', 'david.brown@email.com', 'Ventas', 'Gerente', '');
+
+INSERT INTO contacts (client_id, first_name, last_name, phone, email, department, position, profile_picture) VALUES (4, 'Emily', 'Davis', '+1 555-666666', 'emily.davis@email.com', 'Soporte', 'Técnico', '');
+
+-- Contactos para AquaPurity Water
+INSERT INTO contacts (client_id, first_name, last_name, phone, email, department, position, profile_picture) VALUES (5, 'Daniel', 'Taylor', '+1 555-777777', 'daniel.taylor@email.com', 'Ventas', 'Representante', '');
+
+INSERT INTO contacts (client_id, first_name, last_name, phone, email, department, position, profile_picture) VALUES (5, 'Olivia', 'Martin', '+1 555-888888', 'olivia.martin@email.com', 'Marketing', 'Especialista', '');
+
+INSERT INTO contacts (client_id, first_name, last_name, phone, email, department, position, profile_picture) VALUES (5, 'Sophia', 'Moore', '+1 555-999999', 'sophia.moore@email.com', 'Administración', 'Contador', '');
+
+-- Contactos para HealthGuard Pharmaceuticals
+INSERT INTO contacts (client_id, first_name, last_name, phone, email, department, position, profile_picture) VALUES (6, 'Benjamin', 'Anderson', '+1 555-000000', 'benjamin.anderson@email.com', 'Soporte', 'Técnico', '');
+
+INSERT INTO contacts (client_id, first_name, last_name, phone, email, department, position, profile_picture) VALUES (6, 'Mia', 'Clark', '+1 555-112233', 'mia.clark@email.com', 'Ventas', 'Representante', '');
+
+INSERT INTO contacts (client_id, first_name, last_name, phone, email, department, position, profile_picture) VALUES (6, 'Jacob', 'Lewis', '+1 555-445566','jacob.lewis@email.com', 'Administración', 'Contador', '');
+
+-- Contactos para BrightLight Solar
+INSERT INTO contacts (client_id, first_name, last_name, phone, email, department, position, profile_picture) VALUES (7, 'Emma', 'Walker', '+1 555-677788', 'emma.walker@email.com', 'Marketing', 'Especialista', '');
+
+INSERT INTO contacts (client_id, first_name, last_name, phone, email, department, position, profile_picture) VALUES (7, 'Liam', 'Harris', '+1 555-899900', 'liam.harris@email.com', 'Ventas', 'Representante', '');
+
+INSERT INTO contacts (client_id, first_name, last_name, phone, email, department, position, profile_picture) VALUES (7, 'Ava', 'King', '+1 555-123456', 'ava.king@email.com', 'Soporte', 'Técnico', '');
+
+-- Quotes para John Doe
+INSERT INTO quotes (title, client_id, location, description, total_price, tax_percentage, tax_amount, total_with_tax, status) VALUES ('Quote1 for John Doe', 3, 'Los Angeles', 'Description for Quote1', 1000.00, 10, 100.00, 1100.00, 'REQUESTED');
+INSERT INTO quotes (title, client_id, location, description, total_price, tax_percentage, tax_amount, total_with_tax, status) VALUES ('Quote2 for John Doe', 3, 'San Francisco', 'Description for Quote2', 2000.00, 10, 200.00, 2200.00, 'SENT');
+
+-- Quotes para Jane Smith
+INSERT INTO quotes (title, client_id, location, description, total_price, tax_percentage, tax_amount, total_with_tax, status) VALUES ('Quote1 for Jane Smith', 3, 'San Diego', 'Description for Quote1', 3000.00, 10, 300.00, 3300.00, 'ACCEPTED');
+INSERT INTO quotes (title, client_id, location, description, total_price, tax_percentage, tax_amount, total_with_tax, status) VALUES ('Quote2 for Jane Smith', 3, 'San Jose', 'Description for Quote2', 4000.00, 10, 400.00, 4400.00, 'REJECTED');
+
+-- Quotes para Michael Johnson
+INSERT INTO quotes (title, client_id, location, description, total_price, tax_percentage, tax_amount, total_with_tax, status) VALUES ('Quote1 for Michael Johnson', 3, 'Sacramento', 'Description for Quote1', 5000.00, 10, 500.00, 5500.00, 'REQUESTED');
+INSERT INTO quotes (title, client_id, location, description, total_price, tax_percentage, tax_amount, total_with_tax, status) VALUES ('Quote2 for Michael Johnson', 3, 'Palo Alto', 'Description for Quote2', 6000.00, 10, 600.00, 6600.00, 'SENT');
+
+-- Quotes para Sarah Williams
+INSERT INTO quotes (title, client_id, location, description, total_price, tax_percentage, tax_amount, total_with_tax, status) VALUES ('Quote1 for Sarah Williams', 4, 'Berkeley', 'Description for Quote1', 7000.00, 10, 700.00, 7700.00, 'ACCEPTED');
+INSERT INTO quotes (title, client_id, location, description, total_price, tax_percentage, tax_amount, total_with_tax, status) VALUES ('Quote2 for Sarah Williams', 4, 'Santa Monica', 'Description for Quote2', 8000.00, 10, 800.00, 8800.00, 'REJECTED');

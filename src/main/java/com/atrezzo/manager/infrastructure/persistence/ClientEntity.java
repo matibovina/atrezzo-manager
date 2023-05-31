@@ -56,7 +56,8 @@ public class ClientEntity {
     @OneToMany(mappedBy = "client")
     private List<ContactEntity> contacts;
 
-    //private List<QuotesEntity> quotes;
+    @OneToMany(mappedBy = "client")
+    private List<QuoteEntity> quotes;
 
     //private List<InvoiceEntity> invoices;
 
