@@ -1,23 +1,26 @@
 package com.atrezzo.manager.presentation.controller;
 
 import com.atrezzo.manager.application.dto.ContactDTO;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+
+import java.util.List;
 
 public interface ContactController {
 
 
     //Create contact
-    ResponseEntity<?> addNewContact(ContactDTO contactDTO);
+    ResponseEntity<ContactDTO> addNewContact(ContactDTO contactDTO);
     //find Contact by firstName, lastName, companyName
-    ResponseEntity<?> findContactByNameOrCompany(String firstName, String lastName, String companyName);
+    ResponseEntity<ContactDTO> findContactByNameOrCompany(String firstName, String lastName, String companyName);
     //find contact by id
-    ResponseEntity<?> findContactById(Long id);
+    ResponseEntity<ContactDTO> findContactById(Long id) throws ClassNotFoundException;
     //find all contacts (pageable)
-    ResponseEntity<?> findAllContactByPage(int pageNumber, int pageSize);
+    ResponseEntity<Page<ContactDTO>> findAllContactByPage(int pageNumber, int pageSize);
     //find contacts by companyName - List
-    ResponseEntity<?> findContactsByCompanyName(String companyName);
+    ResponseEntity<List<ContactDTO>> findContactsByCompanyName(String companyName);
     //Update contact
-    ResponseEntity<?> updateContact(ContactDTO contactDTO);
+    ResponseEntity<ContactDTO> updateContact(ContactDTO contactDTO);
     //delete contact
     ResponseEntity<?> deleteContactById(Long id);
 

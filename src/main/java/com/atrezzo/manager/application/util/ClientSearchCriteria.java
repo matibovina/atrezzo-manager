@@ -1,6 +1,6 @@
 package com.atrezzo.manager.application.util;
 
-import com.atrezzo.manager.domain.model.User;
+import com.atrezzo.manager.application.dto.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ClientSearchCriteria {
 
-    private User user;
+    private UserDTO user;
     private String cuit;
     private String companyName;
     private String legalName;

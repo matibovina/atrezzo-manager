@@ -2,24 +2,25 @@ package com.atrezzo.manager.presentation.controller;
 
 import com.atrezzo.manager.application.dto.ClientDTO;
 import com.atrezzo.manager.application.dto.QuoteDTO;
+import com.atrezzo.manager.domain.model.QuoteEntity;
 import com.atrezzo.manager.domain.model.enums.QuoteStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+
 public interface QuoteController {
 
-    ResponseEntity<?> createQuote(QuoteDTO quoteDTO);
+    ResponseEntity<QuoteDTO> createQuote(QuoteDTO quoteDTO);
 
-    ResponseEntity<?> findAllQuotes();
+    ResponseEntity<List<QuoteDTO>> findAllQuotes();
 
-    ResponseEntity<?> findQuoteById(Long id);
+    ResponseEntity<QuoteDTO> findQuoteById(Long id);
 
-    ResponseEntity<?> findQuoteByClient(ClientDTO clientDTO);
+    ResponseEntity<List<QuoteDTO>> findAllQuotesByClientId(Long id);
 
-    ResponseEntity<?> findAllQuotesByClientId(Long id);
+    ResponseEntity<List<QuoteDTO>> findQuotesByStatus(QuoteStatus status);
 
-    ResponseEntity<?> findQuotesByStatus(QuoteStatus status);
-
-    ResponseEntity<?> updateQuote(QuoteDTO quoteDTO);
+    ResponseEntity<QuoteDTO> updateQuote(QuoteDTO quoteDTO);
 
     ResponseEntity<?> deleteQuoteById(Long id);
 

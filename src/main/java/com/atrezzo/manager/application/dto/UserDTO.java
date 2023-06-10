@@ -1,7 +1,5 @@
 package com.atrezzo.manager.application.dto;
 
-import com.atrezzo.manager.domain.model.Role;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

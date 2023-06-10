@@ -8,21 +8,23 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 public interface ClientController {
 
-    ResponseEntity<?> createClient(ClientDTO clientDTO);
+    ResponseEntity<ClientDTO> createClient(ClientDTO clientDTO);
 
-    ResponseEntity<?> findAllClients();
+    ResponseEntity<List<ClientDTO>> findAllClients();
 
-    ResponseEntity<?> findClientById(Long id);
+    ResponseEntity<ClientDTO> findClientById(Long id);
 
-    ResponseEntity<?> findClientByCuit(String cuitNumber);
+    ResponseEntity<ClientDTO> findClientByCuit(String cuitNumber);
 
-    ResponseEntity<?> findClientByLegalName(String legalName);
+    ResponseEntity<ClientDTO> findClientByLegalName(String legalName);
 
-    ResponseEntity<?> findClientByCompanyName(String companyName);
+    ResponseEntity<ClientDTO> findClientByCompanyName(String companyName);
 
-    ResponseEntity<?> updateClient(ClientDTO clientDTO) throws JsonProcessingException;
+    ResponseEntity<ClientDTO> updateClient(ClientDTO clientDTO) throws JsonProcessingException;
 
     ResponseEntity<?> deleteClientById(Long id);
 

@@ -1,6 +1,8 @@
 package com.atrezzo.manager.application.dto;
 
 import com.atrezzo.manager.domain.model.enums.TaxCondition;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +17,7 @@ public class WorkerDTO {
     private Long id;
     private String firstName;
     private String lastName;
-    private String cuit;
+    private String cuitNumber;
     private AddressDTO address;
     private TaxCondition taxCondition;
     private String email;
@@ -25,6 +27,7 @@ public class WorkerDTO {
    // private List<EventDTO> events;
    // private List<SessionServiceDTO> sessionServices;
    // private List<InvoiceDTO> invoices;
+    @Temporal(TemporalType.DATE)
     private Date birthDate;
 
     private String profilePicture;

@@ -9,19 +9,19 @@ public interface RoleService {
 
     //create Role
 
-    RoleDTO createRole (RoleDTO roleDTO) throws IllegalArgumentException;
+    RoleDTO createRole (RoleDTO roleDTO);
 
     //find role by id
-    RoleDTO findRoleById(Long id) throws RoleNotFoundException, ClassNotFoundException;
+    RoleDTO findRoleById(Long id);
 
     //find all roles
-    List<RoleDTO> findAllRoles() throws RoleNotFoundException;
+    List<RoleDTO> findAllRoles();
 
     //update role
-    RoleDTO updateRole(Long id, RoleDTO roleDTO) throws IllegalArgumentException;
+    RoleDTO updateRole(Long id, RoleDTO roleDTO);
 
     //delete role by id
-    void deleteRoleById(Long id) throws ClassNotFoundException;
+    void deleteRoleById(Long id);
 
 
 }

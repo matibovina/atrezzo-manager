@@ -1,21 +1,21 @@
 package com.atrezzo.manager.application.service.impl;
 
+import com.atrezzo.manager.application.dto.ClientDTO;
+import com.atrezzo.manager.application.dto.UserDTO;
 import com.atrezzo.manager.application.service.ClientService;
 import com.atrezzo.manager.application.service.FileStorageService;
 import com.atrezzo.manager.application.util.ClientSearchCriteria;
-import com.atrezzo.manager.domain.model.Client;
-import com.atrezzo.manager.domain.model.User;
 import com.atrezzo.manager.domain.repository.AddressRepository;
 import com.atrezzo.manager.domain.repository.ClientRepository;
 import com.atrezzo.manager.infrastructure.exceptions.NoClientsFoundException;
-import com.atrezzo.manager.infrastructure.persistence.AddressEntity;
-import com.atrezzo.manager.infrastructure.persistence.ClientEntity;
+import com.atrezzo.manager.domain.model.AddressEntity;
+import com.atrezzo.manager.domain.model.ClientEntity;
 
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.atrezzo.manager.infrastructure.persistence.UserEntity;
+import com.atrezzo.manager.domain.model.UserEntity;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,7 +52,7 @@ public class ClientServiceImpl implements ClientService {
 
 
     @Override
-    public Client createClient(Client client) {
+    public ClientDTO createClient(ClientDTO client) {
 
         if (client == null || client.getEmail() == null) {
             throw new IllegalArgumentException("Client or client email can't be null.");
@@ -91,21 +91,21 @@ public class ClientServiceImpl implements ClientService {
             throw new RuntimeException(e.getMessage());
         }
 
-        return modelMapper.map(newClient, Client.class);
+        return modelMapper.map(newClient, ClientDTO.class);
     }
 
     @Override
-    public List<Client> findAll() {
+    public List<ClientDTO> findAll() {
 
         List<ClientEntity> clientEntities = clientRepository.findAll();
 
         return clientEntities.stream().map(
-                clientEntity -> modelMapper.map(clientEntity, Client.class)
+                clientEntity -> modelMapper.map(clientEntity, ClientDTO.class)
         ).collect(Collectors.toList());
     }
 
     @Override
-    public Client findById(Long id) {
+    public ClientDTO findById(Long id) {
 
         if(id == null) {
             throw new IllegalArgumentException("Id can't be null");
@@ -115,11 +115,11 @@ public class ClientServiceImpl implements ClientService {
                 () -> new NoClientsFoundException("Client doesn't exist.")
         );
 
-        return modelMapper.map(foundClient, Client.class);
+        return modelMapper.map(foundClient, ClientDTO.class);
     }
 
     @Override
-    public Client findClientByUser(User user) {
+    public ClientDTO findClientByUser(UserDTO user) {
 
         if(user == null) {
             throw new IllegalArgumentException("User can't be null");
@@ -133,11 +133,11 @@ public class ClientServiceImpl implements ClientService {
             throw new RuntimeException(e);
         }
 
-        return modelMapper.map(foundClient, Client.class);
+        return modelMapper.map(foundClient, ClientDTO.class);
     }
 
     @Override
-    public Client findClientByCuit(String cuit) {
+    public ClientDTO findClientByCuit(String cuit) {
 
         if(cuit == null) {
             throw new IllegalArgumentException("Cuit number can't be null");
@@ -147,11 +147,11 @@ public class ClientServiceImpl implements ClientService {
                 ()-> new NoClientsFoundException("Client doesn't exists.")
         );
 
-        return modelMapper.map(foundClient, Client.class);
+        return modelMapper.map(foundClient, ClientDTO.class);
     }
 
     @Override
-    public Client findClientByCompanyName(String companyName) {
+    public ClientDTO findClientByCompanyName(String companyName) {
 
         if(companyName == null) {
             throw new IllegalArgumentException("Company name can't be null");
@@ -161,11 +161,11 @@ public class ClientServiceImpl implements ClientService {
                 ()-> new NoClientsFoundException("Client doesn't exists.")
         );
 
-        return modelMapper.map(foundClient, Client.class);
+        return modelMapper.map(foundClient, ClientDTO.class);
     }
 
     @Override
-    public Client findClientByLegalName(String legalName) {
+    public ClientDTO findClientByLegalName(String legalName) {
         if(legalName == null) {
             throw new IllegalArgumentException("Company name can't be null");
         }
@@ -174,11 +174,11 @@ public class ClientServiceImpl implements ClientService {
                 ()-> new NoClientsFoundException("Client doesn't exists.")
         );
 
-        return modelMapper.map(foundClient, Client.class);
+        return modelMapper.map(foundClient, ClientDTO.class);
     }
 
     @Override
-    public Client findClient(ClientSearchCriteria searchCriteria) {
+    public ClientDTO findClient(ClientSearchCriteria searchCriteria) {
         if (searchCriteria == null) {
             throw new IllegalArgumentException("Search criteria can't be null.");
         }
@@ -199,11 +199,11 @@ public class ClientServiceImpl implements ClientService {
                 () -> new NoClientsFoundException("Client doesn't exist.")
         );
 
-        return modelMapper.map(foundClient, Client.class);
+        return modelMapper.map(foundClient, ClientDTO.class);
     }
 
     @Override
-    public Client updateClient(Client client) {
+    public ClientDTO updateClient(ClientDTO client) {
 
         if (client == null || client.getEmail() == null) {
             throw new IllegalArgumentException("Client or client email can't be null.");
@@ -233,7 +233,7 @@ public class ClientServiceImpl implements ClientService {
             throw new RuntimeException(e.getMessage());
         }
 
-        return modelMapper.map(updatedClient, Client.class);
+        return modelMapper.map(updatedClient, ClientDTO.class);
     }
 
     @Override

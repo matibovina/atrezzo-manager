@@ -2,8 +2,10 @@ package com.atrezzo.manager.presentation.controller.impl;
 
 import com.atrezzo.manager.application.dto.ContactDTO;
 import com.atrezzo.manager.application.service.ContactService;
-import com.atrezzo.manager.domain.model.Contact;
 import com.atrezzo.manager.presentation.controller.ContactController;
+import com.atrezzo.manager.presentation.exception.CustomIllegalArgumentException;
+import com.atrezzo.manager.presentation.exception.NoClassFoundException;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,96 +15,67 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("api/contacts")
+@RequiredArgsConstructor
+@RequestMapping(value = "api/contacts", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ContactControllerImpl implements ContactController {
 
     @Autowired
-    private ContactService contactService;
-
-    private ModelMapper modelMapper = new ModelMapper();
-
+    private final ContactService contactService;
 
 
     @Override
-    @PostMapping(value = "/contacts", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> addNewContact(@RequestBody ContactDTO contactDTO) {
-
-        try {
-            Contact savedContact =  contactService.addNewContact(modelMapper.map(contactDTO, Contact.class));
-        return ResponseEntity.status(HttpStatus.CREATED).body(modelMapper.map(savedContact, ContactDTO.class));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error while trying to save contact");
-        }
+    @PostMapping("/contacts")
+    public ResponseEntity<ContactDTO> addNewContact(@RequestBody ContactDTO contactDTO) throws NoClassFoundException, CustomIllegalArgumentException {
+        return new ResponseEntity<>(contactService.addNewContact(contactDTO), HttpStatus.OK);
     }
 
     @Override
-    @GetMapping(value = "/contact/search", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> findContactByNameOrCompany(@RequestParam(required = false) String firstName,@RequestParam(required = false) String lastName,@RequestParam(required = false) String companyName) {
-        try {
-            Contact contact = contactService.findContact(firstName, lastName, companyName);
-            return ResponseEntity.ok(modelMapper.map(contact, ContactDTO.class));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error while trying to find contact");
-        }
+    @GetMapping("/contact/search")
+    public ResponseEntity<ContactDTO> findContactByNameOrCompany(
+            @RequestParam(required = false) String firstName,
+            @RequestParam(required = false) String lastName,
+            @RequestParam(required = false) String companyName)
+            throws NoClassFoundException, CustomIllegalArgumentException{
+        return new ResponseEntity<>(contactService.findContact(firstName, lastName, companyName), HttpStatus.OK);
     }
 
     @Override
-    @GetMapping(value = "/contact/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> findContactById(@PathVariable Long id) {
-        try {
-            Contact contact = contactService.findContactById(id);
-            return ResponseEntity.ok(modelMapper.map(contact, ContactDTO.class));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error while trying to find contact");
-        }
+    @GetMapping("/contact/{id}")
+    public ResponseEntity<ContactDTO> findContactById(@PathVariable Long id) throws NoClassFoundException, CustomIllegalArgumentException, ClassNotFoundException {
+        return new ResponseEntity<>(contactService.findContactById(id), HttpStatus.OK);
+
     }
 
     @Override
-    @GetMapping(value = "/contacts", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> findAllContactByPage(@RequestParam int pageNumber,@RequestParam int pageSize) {
-        try {
-            Page<Contact> contactsPage = contactService.findAllContacts(pageNumber, pageSize);
-            Page<ContactDTO> dtoPage = contactsPage.map(contact -> modelMapper.map(contact, ContactDTO.class));
-            return ResponseEntity.ok(dtoPage);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error while trying to find contacts");
-        }
+    @GetMapping("/contacts")
+    public ResponseEntity<Page<ContactDTO>> findAllContactByPage(
+            @RequestParam int pageNumber,
+            @RequestParam int pageSize)
+            throws NoClassFoundException, CustomIllegalArgumentException {
+        return new ResponseEntity<>(contactService.findAllContacts(pageNumber, pageSize), HttpStatus.OK);
+
     }
 
     @Override
-    @GetMapping(value = "/contacts/company", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> findContactsByCompanyName(@RequestParam String companyName) {
-        try {
-            List<Contact> contacts = contactService.findAllContactsByCompanyName(companyName);
-            List<ContactDTO> dtoList = contacts.stream().map(contact -> modelMapper.map(contact, ContactDTO.class)).collect(Collectors.toList());
-            return ResponseEntity.ok(dtoList);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error while trying to find contacts");
-        }
+    @GetMapping("/contacts/company")
+    public ResponseEntity<List<ContactDTO>> findContactsByCompanyName(@RequestParam String companyName)
+            throws NoClassFoundException, CustomIllegalArgumentException{
+        return new ResponseEntity<>(contactService.findAllContactsByCompanyName(companyName), HttpStatus.OK);
     }
 
     @Override
-    @PutMapping(value = "/contact", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> updateContact(@RequestBody ContactDTO contactDTO) {
-        try {
-            Contact updatedContact = contactService.updateContact(modelMapper.map(contactDTO, Contact.class));
-            return ResponseEntity.ok(modelMapper.map(updatedContact, ContactDTO.class));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error while trying to update contact");
-        }
+    @PutMapping("/contact")
+    public ResponseEntity<ContactDTO> updateContact(@RequestBody ContactDTO contactDTO)
+            throws NoClassFoundException, CustomIllegalArgumentException{
+        return new ResponseEntity<>(contactService.updateContact(contactDTO), HttpStatus.OK);
     }
 
     @Override
-    @DeleteMapping(value = "/contact/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @DeleteMapping("/contact/{id}")
     public ResponseEntity<?> deleteContactById(@PathVariable Long id) {
-        try {
-            contactService.deleteContactById(id);
-            return ResponseEntity.noContent().build();
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error while trying to delete contact");
-        }
+        contactService.deleteContactById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

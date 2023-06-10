@@ -6,13 +6,12 @@ import com.atrezzo.manager.application.service.QuoteService;
 import com.atrezzo.manager.domain.model.enums.QuoteStatus;
 import com.atrezzo.manager.domain.repository.ClientRepository;
 import com.atrezzo.manager.domain.repository.QuoteRepository;
-import com.atrezzo.manager.infrastructure.persistence.ClientEntity;
-import com.atrezzo.manager.infrastructure.persistence.QuoteEntity;
+import com.atrezzo.manager.domain.model.ClientEntity;
+import com.atrezzo.manager.domain.model.QuoteEntity;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ServerErrorException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,33 +28,33 @@ public class QuoteServiceImpl implements QuoteService {
 
 
     @Override
-    public QuoteEntity createQuote(QuoteEntity quote) {
-        QuoteEntity quoteEntity = modelMapper.map(quote, QuoteEntity.class);
+    public QuoteDTO createQuote(QuoteDTO quote) {
+        QuoteDTO quoteDTO = quote;
 
-        if(quoteEntity == null) {
+        if(quote == null) {
             throw new IllegalArgumentException("Quote can't be null");
         }
         QuoteEntity savedQuote;
         try {
-            savedQuote = quoteRepository.save(quoteEntity);
+            savedQuote = quoteRepository.save(modelMapper.map(quote, QuoteEntity.class));
         } catch (Exception e) {
             throw new EntityNotFoundException("Error while saving Quote");
         }
-        return modelMapper.map(quoteEntity, QuoteEntity.class);
+        return modelMapper.map(savedQuote, QuoteDTO.class);
     }
 
     @Override
-    public List<QuoteEntity> getAllQuotes() {
+    public List<QuoteDTO> getAllQuotes() {
 
         List<QuoteEntity> quoteEntities = quoteRepository.findAll();
 
         return quoteEntities.stream().map(
-                quoteEntity -> modelMapper.map(quoteEntity, QuoteEntity.class)
+                quoteEntity -> modelMapper.map(quoteEntity, QuoteDTO.class)
         ).collect(Collectors.toList());
     }
 
     @Override
-    public QuoteEntity findQuoteById(Long id) {
+    public QuoteDTO findQuoteById(Long id) {
 
         if (id == null) {
             throw new IllegalArgumentException("Id can't be null");
@@ -65,50 +64,37 @@ public class QuoteServiceImpl implements QuoteService {
                     () -> new EntityNotFoundException("Quote not found")
             );
 
-        return modelMapper.map(foundQuote, QuoteEntity.class);
+        return modelMapper.map(foundQuote, QuoteDTO.class);
     }
 
     @Override
-    public QuoteEntity findQuoteByClient(ClientEntity client) {
-        if(client == null || client.getId() == null) {
-            throw new IllegalArgumentException("Client can't be null");
-        }
-
-        ClientEntity clientEntity = clientRepository.findById(client.getId())
-                .orElseThrow(() -> new EntityNotFoundException("Client not found"));
-
-        QuoteEntity quote = quoteRepository.findByClientId(clientEntity.getId());
-
-        return modelMapper.map(quote, QuoteEntity.class);
-    }
-
-    @Override
-    public List<QuoteEntity> findAllQuotesByClientId(Long clientId) {
+    public List<QuoteDTO> findAllQuotesByClientId(Long clientId) {
         if(clientId == null) {
             throw new IllegalArgumentException("Client can't be null");
         }
+        System.out.println(clientId);
+/*        ClientEntity clientEntity = clientRepository.findById(clientId)
+                .orElseThrow(() -> new EntityNotFoundException("Client not found"));*/
+        System.out.println("numero cliente: " + clientId);
 
-        ClientEntity clientEntity = clientRepository.findById(clientId)
-                .orElseThrow(() -> new EntityNotFoundException("Client not found"));
-
-        List<QuoteEntity> quotes = quoteRepository.findAllByClientId(clientEntity.getId());
-
-        return quotes.stream().map(quote -> modelMapper.map(quote, QuoteEntity.class)).collect(Collectors.toList());
+        List<QuoteEntity> quotes = quoteRepository.findAllByClient_Id(clientId);
+        System.out.println("hola");
+        return quotes.stream().map(quote -> modelMapper.map(quote, QuoteDTO.class)).collect(Collectors.toList());
     }
 
     @Override
-    public List<QuoteEntity> findQuoteByStatus(String status) {
+    public List<QuoteDTO> findQuoteByStatus(String status) {
         if(status == null) {
             throw new IllegalArgumentException("Status can't be null");
         }
+        QuoteStatus quoteStatus = QuoteStatus.valueOf(status.toUpperCase());
 
-        List<QuoteEntity> quotes = quoteRepository.findAllByStatus(status);
-
-        return quotes.stream().map(quote -> modelMapper.map(quote, QuoteEntity.class)).collect(Collectors.toList());
+        List<QuoteEntity> quotes = quoteRepository.findAllByStatus(quoteStatus);
+        return quotes.stream().map(quote -> modelMapper.map(quote, QuoteDTO.class)).collect(Collectors.toList());
     }
 
     @Override
-    public QuoteEntity updateQuote(QuoteEntity quote) {
+    public QuoteDTO updateQuote(QuoteDTO quote) {
         if(quote == null || quote.getId() == null) {
             throw new IllegalArgumentException("Quote can't be null");
         }
@@ -119,7 +105,7 @@ public class QuoteServiceImpl implements QuoteService {
         quoteEntity.setStatus(quote.getStatus());
 
         QuoteEntity updatedQuote = quoteRepository.save(quoteEntity);
-        return modelMapper.map(updatedQuote, QuoteEntity.class);
+        return modelMapper.map(updatedQuote, QuoteDTO.class);
 
     }
 

@@ -4,6 +4,9 @@ import com.atrezzo.manager.application.dto.WorkerDTO;
 import com.atrezzo.manager.application.service.FileStorageService;
 import com.atrezzo.manager.application.service.WorkerService;
 import com.atrezzo.manager.presentation.controller.WorkerController;
+import com.atrezzo.manager.presentation.exception.CustomIllegalArgumentException;
+import com.atrezzo.manager.presentation.exception.NoClassFoundException;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +20,11 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/workers")
+@RequiredArgsConstructor
+@RequestMapping(value = "api/workers", produces = MediaType.APPLICATION_JSON_VALUE)
 public class WorkerControllerImpl implements WorkerController {
 
-
-    @Autowired
-    private WorkerService workerService;
+    private final WorkerService workerService;
 
     @Autowired
     private FileStorageService fileStorageService;
@@ -31,80 +33,47 @@ public class WorkerControllerImpl implements WorkerController {
 
 
     @Override
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<WorkerDTO> createWorker(WorkerDTO workerDTO) {
-        try {
-            WorkerDTO savedWorker = workerService.createWorker(workerDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body(savedWorker);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
+    @PostMapping
+    public ResponseEntity<WorkerDTO> createWorker(WorkerDTO workerDTO) throws NoClassFoundException, CustomIllegalArgumentException {
+        return new ResponseEntity<>(workerService.createWorker(workerDTO), HttpStatus.OK);
     }
 
     @Override
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<WorkerDTO>> findAll() {
-        try {
-            List<WorkerDTO> workers = workerService.findAllWorkers();
-            return ResponseEntity.ok(workers);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
+    @GetMapping
+    public ResponseEntity<List<WorkerDTO>> findAll() throws NoClassFoundException, CustomIllegalArgumentException{
+        return new ResponseEntity<>(workerService.findAllWorkers(), HttpStatus.OK);
     }
 
     @Override
-    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<WorkerDTO> findById(Long id) {
-        try {
-            WorkerDTO worker = workerService.findWorkerById(id);
-            return ResponseEntity.ok(worker);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
+    @GetMapping("/{id}")
+    public ResponseEntity<WorkerDTO> findById(Long id) throws NoClassFoundException, CustomIllegalArgumentException {
+        return new ResponseEntity<>(workerService.findWorkerById(id), HttpStatus.OK);
     }
 
     @Override
-    @GetMapping(value = "/username/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<WorkerDTO> findByUserUsername(String username) {
-        try {
-            WorkerDTO worker = workerService.findWorkerByUsername(username);
-            return ResponseEntity.ok(worker);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
+    @GetMapping("/username/{username}")
+    public ResponseEntity<WorkerDTO> findByUserUsername(String username) throws NoClassFoundException, CustomIllegalArgumentException {
+        return new ResponseEntity<>(workerService.findWorkerByUsername(username), HttpStatus.OK);
     }
 
     @Override
-    @GetMapping(value = "/email/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<WorkerDTO> findByEmail(String email) {
-        try {
-            WorkerDTO worker = workerService.findWorkerByEmail(email);
-            return ResponseEntity.ok(worker);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
+    @GetMapping("/email/{email}")
+    public ResponseEntity<WorkerDTO> findByEmail(String email) throws NoClassFoundException, CustomIllegalArgumentException {
+        return new ResponseEntity<>(workerService.findWorkerByEmail(email), HttpStatus.OK);
     }
 
     @Override
-    @PutMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<WorkerDTO> updateWorker(Long id, WorkerDTO workerDTO) {
-        try {
-            WorkerDTO updatedWorker = workerService.updateWorker(id, workerDTO);
-            return ResponseEntity.ok(updatedWorker);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
+    @PutMapping("/{id}")
+    public ResponseEntity<WorkerDTO> updateWorker(Long id, WorkerDTO workerDTO)
+    throws NoClassFoundException, CustomIllegalArgumentException{
+        return new ResponseEntity<>(workerService.updateWorker(id, workerDTO), HttpStatus.OK);
     }
 
     @Override
-    @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> deleteWorker(Long id) {
-        try {
-            workerService.deleteWorker(id);
-            return ResponseEntity.noContent().build();
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error while trying to delete worker");
-        }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteWorker(Long id) throws NoClassFoundException, CustomIllegalArgumentException {
+        workerService.deleteWorker(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping(value = "/worker/{id}/profilePicture", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
