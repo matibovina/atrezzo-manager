@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -35,6 +38,9 @@ public class ContactEntity {
     private String position;
 
     private String profilePicture;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
 
 }

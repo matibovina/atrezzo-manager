@@ -1,11 +1,16 @@
 package com.atrezzo.manager.domain.model;
 
+import com.atrezzo.manager.domain.model.enums.EventStatus;
+import com.atrezzo.manager.domain.model.enums.QuoteStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -15,12 +20,7 @@ import java.util.Map;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "events")
-public class EventEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+public class EventEntity extends BaseEntity{
     @OneToOne
     @JoinColumn(name = "quote_id")
     private QuoteEntity quote;
@@ -37,5 +37,6 @@ public class EventEntity {
 
     private Long clientId;
 
-    private Boolean delivered;
+    @Enumerated(EnumType.STRING)
+    private EventStatus eventStatus;
 }

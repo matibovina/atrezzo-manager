@@ -114,3 +114,60 @@ INSERT INTO quotes (title, client_id, location, description, total_price, tax_pe
 -- Quotes para Sarah Williams
 INSERT INTO quotes (title, client_id, location, description, total_price, tax_percentage, tax_amount, total_with_tax, status) VALUES ('Quote1 for Sarah Williams', 4, 'Berkeley', 'Description for Quote1', 7000.00, 10, 700.00, 7700.00, 'ACCEPTED');
 INSERT INTO quotes (title, client_id, location, description, total_price, tax_percentage, tax_amount, total_with_tax, status) VALUES ('Quote2 for Sarah Williams', 4, 'Santa Monica', 'Description for Quote2', 8000.00, 10, 800.00, 8800.00, 'REJECTED');
+
+-- Servicios de Fotografía
+INSERT INTO services (title, description, category, type) VALUES ('Fotografía Institucional', 'Fotografía profesional para instituciones', 'INSTITUCIONAL', 'PHOTOGRAPHY');
+INSERT INTO services (title, description, category, type) VALUES ('Fotografía Empresarial', 'Fotografía profesional para empresas', 'EMPRESARIAL', 'PHOTOGRAPHY');
+INSERT INTO services (title, description, category, type) VALUES ('Fotografía Publicitaria', 'Fotografía profesional para publicidad', 'PUBLICITARIO', 'PHOTOGRAPHY');
+INSERT INTO services (title, description, category, type) VALUES ('Fotografía Social', 'Fotografía profesional para eventos sociales', 'SOCIAL', 'PHOTOGRAPHY');
+INSERT INTO services (title, description, category, type) VALUES ('Edición de Fotografía', 'Servicio de edición profesional para fotografías', 'INSTITUCIONAL', 'PHOTOGRAPHY');
+INSERT INTO services (title, description, category, type) VALUES ('Edición de Fotografía', 'Servicio de edición profesional para fotografías', 'EMPRESARIAL', 'PHOTOGRAPHY');
+INSERT INTO services (title, description, category, type) VALUES ('Edición de Fotografía', 'Servicio de edición profesional para fotografías', 'PUBLICITARIO', 'PHOTOGRAPHY');
+INSERT INTO services (title, description, category, type) VALUES ('Edición de Fotografía', 'Servicio de edición profesional para fotografías', 'SOCIAL', 'PHOTOGRAPHY');
+
+-- Servicios de Video
+INSERT INTO services (title, description, category, type) VALUES ('Video Institucional', 'Producción de videos para instituciones', 'INSTITUCIONAL', 'VIDEO');
+INSERT INTO services (title, description, category, type) VALUES ('Video Empresarial', 'Producción de videos para empresas', 'EMPRESARIAL', 'VIDEO');
+INSERT INTO services (title, description, category, type) VALUES ('Video Publicitario', 'Producción de videos para publicidad', 'PUBLICITARIO', 'VIDEO');
+INSERT INTO services (title, description, category, type) VALUES ('Video Social', 'Producción de videos para eventos sociales', 'SOCIAL', 'VIDEO');
+INSERT INTO services (title, description, category, type) VALUES ('Edición de Video', 'Servicio de edición profesional para videos', 'INSTITUCIONAL', 'VIDEO');
+INSERT INTO services (title, description, category, type) VALUES ('Edición de Video', 'Servicio de edición profesional para videos', 'EMPRESARIAL', 'VIDEO');
+INSERT INTO services (title, description, category, type) VALUES ('Edición de Video', 'Servicio de edición profesional para videos', 'PUBLICITARIO', 'VIDEO');
+INSERT INTO services (title, description, category, type) VALUES ('Edición de Video', 'Servicio de edición profesional para videos', 'SOCIAL', 'VIDEO');
+
+-- Asignando servicios de fotografía a los fotógrafos
+INSERT INTO worker_services (worker_id, service_id) VALUES (1, 1);
+INSERT INTO worker_services (worker_id, service_id) VALUES (1, 2);
+INSERT INTO worker_services (worker_id, service_id) VALUES (1, 3);
+INSERT INTO worker_services (worker_id, service_id) VALUES (1, 4);
+INSERT INTO worker_services (worker_id, service_id) VALUES (2, 1);
+INSERT INTO worker_services (worker_id, service_id) VALUES (2, 2);
+INSERT INTO worker_services (worker_id, service_id) VALUES (2, 3);
+INSERT INTO worker_services (worker_id, service_id) VALUES (2, 4);
+INSERT INTO worker_services (worker_id, service_id) VALUES (3, 1);
+INSERT INTO worker_services (worker_id, service_id) VALUES (3, 2);
+INSERT INTO worker_services (worker_id, service_id) VALUES (3, 3);
+INSERT INTO worker_services (worker_id, service_id) VALUES (3, 4);
+INSERT INTO worker_services (worker_id, service_id) VALUES (4, 1);
+INSERT INTO worker_services (worker_id, service_id) VALUES (4, 2);
+INSERT INTO worker_services (worker_id, service_id) VALUES (4, 3);
+INSERT INTO worker_services (worker_id, service_id) VALUES (4, 4);
+
+
+-- Asignando servicios de video a los videógrafos
+INSERT INTO worker_services (worker_id, service_id) VALUES (5, 9);
+INSERT INTO worker_services (worker_id, service_id) VALUES (5, 10);
+INSERT INTO worker_services (worker_id, service_id) VALUES (5, 11);
+INSERT INTO worker_services (worker_id, service_id) VALUES (5, 12);
+INSERT INTO worker_services (worker_id, service_id) VALUES (6, 9);
+INSERT INTO worker_services (worker_id, service_id) VALUES (6, 10);
+INSERT INTO worker_services (worker_id, service_id) VALUES (6, 11);
+INSERT INTO worker_services (worker_id, service_id) VALUES (6, 12);
+INSERT INTO worker_services (worker_id, service_id) VALUES (7, 9);
+INSERT INTO worker_services (worker_id, service_id) VALUES (7, 10);
+INSERT INTO worker_services (worker_id, service_id) VALUES (7, 11);
+INSERT INTO worker_services (worker_id, service_id) VALUES (7, 12);
+INSERT INTO worker_services (worker_id, service_id) VALUES (8, 9);
+INSERT INTO worker_services (worker_id, service_id) VALUES (8, 10);
+INSERT INTO worker_services (worker_id, service_id) VALUES (8, 11);
+INSERT INTO worker_services (worker_id, service_id) VALUES (8, 12);

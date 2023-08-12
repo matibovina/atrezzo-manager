@@ -6,7 +6,9 @@ import jakarta.persistence.TemporalType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -23,12 +25,13 @@ public class WorkerDTO {
     private String email;
     private String phone;
     private UserDTO user;
-   // private List<ServiceDTO> services;
-   // private List<EventDTO> events;
+    private List<ServiceDTO> services;
+    private List<EventDTO> events;
    // private List<SessionServiceDTO> sessionServices;
    // private List<InvoiceDTO> invoices;
-    @Temporal(TemporalType.DATE)
     private Date birthDate;
+
+    private LocalDateTime createdAt;
 
     private String profilePicture;
 }

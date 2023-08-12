@@ -3,12 +3,16 @@ package com.atrezzo.manager.application.service.impl;
 import com.atrezzo.manager.application.dto.ClientDTO;
 import com.atrezzo.manager.application.dto.QuoteDTO;
 import com.atrezzo.manager.application.service.QuoteService;
+import com.atrezzo.manager.domain.model.QuoteSessionEntity;
+import com.atrezzo.manager.domain.model.SessionServiceEntity;
 import com.atrezzo.manager.domain.model.enums.QuoteStatus;
 import com.atrezzo.manager.domain.repository.ClientRepository;
 import com.atrezzo.manager.domain.repository.QuoteRepository;
 import com.atrezzo.manager.domain.model.ClientEntity;
 import com.atrezzo.manager.domain.model.QuoteEntity;
+import com.atrezzo.manager.domain.repository.QuoteSessionRepository;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,14 +21,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class QuoteServiceImpl implements QuoteService {
 
-    @Autowired
-    private QuoteRepository quoteRepository;
+    private final QuoteRepository quoteRepository;
 
     private ModelMapper  modelMapper = new ModelMapper();
 
-    private ClientRepository clientRepository;
+    private final ClientRepository clientRepository;
+
+    private final QuoteSessionRepository quoteSessionRepository;
+
+
 
 
     @Override
@@ -34,7 +42,15 @@ public class QuoteServiceImpl implements QuoteService {
         if(quote == null) {
             throw new IllegalArgumentException("Quote can't be null");
         }
-        QuoteEntity savedQuote;
+
+
+        QuoteEntity savedQuote = new QuoteEntity();
+        savedQuote.setClient(clientRepository.findById(quoteDTO.getClient().getId()).orElseThrow());
+
+        QuoteSessionEntity quoteSession = new QuoteSessionEntity();
+
+        SessionServiceEntity sessionService = new SessionServiceEntity();
+
         try {
             savedQuote = quoteRepository.save(modelMapper.map(quote, QuoteEntity.class));
         } catch (Exception e) {

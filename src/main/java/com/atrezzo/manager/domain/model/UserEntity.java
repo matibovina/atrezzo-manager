@@ -18,11 +18,8 @@ import java.util.List;
 @Entity
 @Table(name = "users")
 @ToString(exclude = "roles")
-public class UserEntity {
+public class UserEntity extends BaseEntity{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     private String username;
 
@@ -31,13 +28,9 @@ public class UserEntity {
 
     private String password;
 
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<UserRoleEntity> roles = new ArrayList<>();
 
     private Boolean enabled;
-
-    @CreationTimestamp
-    private LocalDateTime creationDate;
 
 }

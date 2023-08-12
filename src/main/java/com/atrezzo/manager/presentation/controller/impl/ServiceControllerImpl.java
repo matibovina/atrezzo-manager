@@ -5,6 +5,7 @@ import com.atrezzo.manager.application.dto.ServiceDTO;
 import com.atrezzo.manager.application.dto.WorkerDTO;
 import com.atrezzo.manager.application.service.ServiceService;
 import com.atrezzo.manager.domain.model.enums.ServiceCategory;
+import com.atrezzo.manager.domain.model.enums.ServiceType;
 import com.atrezzo.manager.presentation.controller.ServiceController;
 import com.atrezzo.manager.presentation.exception.CustomIllegalArgumentException;
 import com.atrezzo.manager.presentation.exception.NoClassFoundException;
@@ -53,6 +54,20 @@ public class ServiceControllerImpl implements ServiceController {
     @GetMapping("/category/{category}")
     public ResponseEntity<List<ServiceDTO>> findServicesByCategory(@PathVariable ServiceCategory category) throws NoClassFoundException, CustomIllegalArgumentException  {
         return new ResponseEntity<>(service.getServicesByCategory(category), HttpStatus.OK);
+    }
+
+    @Override
+    @GetMapping("/category/{category}/type/{type}")
+    public ResponseEntity<List<ServiceDTO>> findServicesByCategoryAndType(@PathVariable ServiceCategory category,@PathVariable ServiceType type) throws NoClassFoundException, CustomIllegalArgumentException {
+        return new ResponseEntity<>(service.getServicesByCategoryAndType(category, type), HttpStatus.OK);
+
+    }
+
+    @Override
+    @GetMapping("/type/{type}")
+    public ResponseEntity<List<ServiceDTO>> findServicesByType(@PathVariable ServiceType type) throws NoClassFoundException, CustomIllegalArgumentException {
+        return new ResponseEntity<>(service.getServicesByType(type), HttpStatus.OK);
+
     }
 
     @Override

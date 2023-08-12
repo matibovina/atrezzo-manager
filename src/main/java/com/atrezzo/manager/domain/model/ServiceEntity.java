@@ -1,6 +1,7 @@
 package com.atrezzo.manager.domain.model;
 
 import com.atrezzo.manager.domain.model.enums.ServiceCategory;
+import com.atrezzo.manager.domain.model.enums.ServiceType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,10 +29,13 @@ public class ServiceEntity {
     @Enumerated(EnumType.STRING)
     private ServiceCategory category;
 
+    @Enumerated(EnumType.STRING)
+    private ServiceType type;
+
     @OneToMany(mappedBy = "service", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ServiceWorkerPriceEntity> serviceWorkerPrices;
 
-    @OneToMany(mappedBy = "service", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "service", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<WorkerServiceEntity> workers;
 
 }

@@ -3,6 +3,7 @@ package com.atrezzo.manager.application.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -28,7 +29,7 @@ public class UserDTO implements Serializable {
 
     private Boolean enabled;
 
-    private LocalDateTime creationDate;
+    private LocalDateTime createdAt;
 
     private String roleName;
 

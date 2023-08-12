@@ -2,13 +2,11 @@ package com.atrezzo.manager.application.service.impl;
 
 import com.atrezzo.manager.application.dto.EventSessionDTO;
 import com.atrezzo.manager.application.dto.ServiceDTO;
-import com.atrezzo.manager.application.dto.ServiceWorkerPriceDTO;
 import com.atrezzo.manager.application.dto.WorkerDTO;
 import com.atrezzo.manager.application.service.ServiceService;
-import com.atrezzo.manager.domain.model.EventSessionEntity;
 import com.atrezzo.manager.domain.model.ServiceEntity;
-import com.atrezzo.manager.domain.model.ServiceWorkerPriceEntity;
 import com.atrezzo.manager.domain.model.enums.ServiceCategory;
+import com.atrezzo.manager.domain.model.enums.ServiceType;
 import com.atrezzo.manager.domain.repository.ServiceRepository;
 import com.atrezzo.manager.infrastructure.exceptions.NoClientsFoundException;
 import lombok.RequiredArgsConstructor;
@@ -87,6 +85,30 @@ public class ServiceServiceImpl implements ServiceService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<ServiceDTO> getServicesByCategoryAndType(ServiceCategory category, ServiceType type) {
+        if(category == null || type == null) {
+            throw new IllegalArgumentException("Category can't be null");
+        }
+
+        return serviceRepository.findServicesByCategoryAndType(category, type)
+                .stream().map(serviceEntity -> modelMapper.map(serviceEntity, ServiceDTO.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ServiceDTO> getServicesByType(ServiceType type) {
+        if(type == null) {
+            throw new IllegalArgumentException("Category can't be null");
+        }
+
+        return serviceRepository.findServicesByType(type)
+                .stream().map(serviceEntity -> modelMapper.map(serviceEntity, ServiceDTO.class))
+                .collect(Collectors.toList());
+    }
+
     @Transactional(readOnly = true)
     @Override
     public List<EventSessionDTO> getEventsByService(Long serviceId) {
@@ -94,6 +116,7 @@ public class ServiceServiceImpl implements ServiceService {
     }
 
     @Override
+    @Transactional
     public ServiceDTO updateService(ServiceDTO serviceDTO) {
         if (serviceDTO == null || serviceDTO.getId() == null) {
             throw new IllegalArgumentException("Service or service id can't be null");
@@ -106,6 +129,7 @@ public class ServiceServiceImpl implements ServiceService {
     }
 
     @Override
+    @Transactional
     public void deleteService(Long serviceId) {
         if(serviceId == null) {
             throw new IllegalArgumentException("Id can't be null");

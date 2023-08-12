@@ -1,5 +1,7 @@
 package com.atrezzo.manager.application.dto;
 
+import com.atrezzo.manager.domain.model.enums.ServiceCategory;
+import com.atrezzo.manager.domain.model.enums.ServiceType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,6 +22,8 @@ public class ServiceDTO implements Serializable {
 
     private Long id;
     private String title;
+    private ServiceCategory category;
+    private ServiceType type;
     private String description;
     private List<ServiceWorkerPriceDTO> serviceWorkerPrices;
     private List<WorkerDTO> workers;

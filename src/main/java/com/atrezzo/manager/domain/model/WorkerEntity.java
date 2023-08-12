@@ -5,7 +5,9 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -14,14 +16,12 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "workers")
-public class WorkerEntity {
+public class WorkerEntity extends BaseEntity{
 
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private String firstName;
+
     private String lastName;
+
     private String cuitNumber;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -42,7 +42,7 @@ public class WorkerEntity {
 
     private String profilePicture;
 
-    @OneToMany(mappedBy = "worker", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "worker", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<WorkerServiceEntity> services;
     //private List<EventEntity> events;
     // private List<SessionServiceEntity> sessionServices;

@@ -7,7 +7,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -17,11 +19,8 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "quotes")
-public class QuoteEntity {
+public class QuoteEntity extends BaseEntity{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private String title;
     @ManyToOne
     @JoinColumn(name = "client_id")
@@ -36,6 +35,8 @@ public class QuoteEntity {
     @Enumerated(EnumType.STRING)
     private QuoteStatus status;
 
+    private LocalDateTime statusChangedAt;
+
     @ManyToMany
     @JoinTable(
             name = "quote_contact",
@@ -49,11 +50,17 @@ public class QuoteEntity {
     private EventEntity event;
 
     @OneToMany(mappedBy = "quote", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<EventSessionEntity> eventSessions;
+    private List<QuoteSessionEntity> eventSessions;
 
+    public void setStatus(QuoteStatus status){
+        this.status = status;
+        this.statusChangedAt = LocalDateTime.now();
+    }
 
     public void calculateTaxAndTotalWithTax() {
         taxAmount = totalPrice * (taxPercentage / 100);
         totalWithTax = totalPrice + taxAmount;
     }
+
+
 }

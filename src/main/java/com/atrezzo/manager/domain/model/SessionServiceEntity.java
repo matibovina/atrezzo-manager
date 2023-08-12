@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Map;
+
 
 @Entity
 @Table(name = "session_services")
@@ -29,11 +31,16 @@ public class SessionServiceEntity {
     @Column(name = "total_service_price")
     private Double totalServicePrice;
 
-    @Column(name = "worker_salary")
-    private Double workerSalary;
+    @ElementCollection
+    private Map<WorkerEntity, Double> workerSalary;
+
     @ManyToOne
     @JoinColumn(name = "event_session_id")
     private EventSessionEntity eventSession;
+
+    @ManyToOne
+    @JoinColumn(name = "quote_session_id")
+    private QuoteSessionEntity quoteSession;
 
     @Column(name = "duration_hours")
     private Integer durationHours;

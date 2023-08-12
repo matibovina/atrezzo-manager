@@ -55,4 +55,12 @@ public class SwaggerConfig {
                 .build();
     }
 
+    @Bean
+    public GroupedOpenApi serviceApi() {
+        return GroupedOpenApi.builder()
+                .group("services")
+                .pathsToMatch("/api/services/**")
+                .build();
+    }
+
 }

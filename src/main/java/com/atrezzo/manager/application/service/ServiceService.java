@@ -7,6 +7,7 @@ import com.atrezzo.manager.application.dto.WorkerDTO;
 import com.atrezzo.manager.domain.model.EventSessionEntity;
 import com.atrezzo.manager.domain.model.ServiceWorkerPriceEntity;
 import com.atrezzo.manager.domain.model.enums.ServiceCategory;
+import com.atrezzo.manager.domain.model.enums.ServiceType;
 
 import java.util.List;
 
@@ -21,6 +22,10 @@ public interface ServiceService {
     List<WorkerDTO> getWorkersByService (Long serviceId);
 
     List<ServiceDTO> getServicesByCategory(ServiceCategory category);
+
+    List<ServiceDTO> getServicesByCategoryAndType(ServiceCategory category, ServiceType type);
+
+    List<ServiceDTO> getServicesByType(ServiceType type);
 
     List<EventSessionDTO> getEventsByService(Long serviceId);
 

@@ -1,9 +1,6 @@
 package com.atrezzo.manager.application.dto;
 
-import com.atrezzo.manager.domain.model.ServiceEntity;
 import com.atrezzo.manager.domain.model.enums.QuoteStatus;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +8,7 @@ import lombok.Setter;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -31,15 +29,13 @@ public class QuoteDTO implements Serializable {
     private Double taxPercentage;
     private Double taxAmount;
     private Double totalWithTax;
-
-    @Enumerated(EnumType.STRING)
+    private LocalDateTime createdAt;
+    private LocalDateTime statusChangedAt;
     private QuoteStatus status;
     private List<ContactDTO> contacts;
     //private Invoice invoice;
     //private List<ExtraItem> extraItems;
-    //private Event event;
-    //private List<EventSession> eventSessions;
-
-
+    private EventDTO event;
+    private List<EventSessionDTO> eventSessions;
 
 }
