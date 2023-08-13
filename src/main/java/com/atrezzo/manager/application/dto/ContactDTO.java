@@ -5,9 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 
 @Getter
@@ -34,6 +36,8 @@ public class ContactDTO implements Serializable {
     private String position;
 
     private String profilePicture;
+
+    private LocalDateTime createdAt;
 
 
     @Serial

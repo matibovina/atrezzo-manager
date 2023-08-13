@@ -12,9 +12,9 @@ public interface RoleController {
 
     ResponseEntity<RoleDTO> findRoleById(Long id) throws RoleNotFoundException, ClassNotFoundException;
 
-    ResponseEntity<List<RoleDTO>> findAllRoles() throws RoleNotFoundException;
+    ResponseEntity<List<RoleDTO>> findAllRoles();
 
-    ResponseEntity<Object> deleteById(Long id) throws RoleNotFoundException, ClassNotFoundException;
+    ResponseEntity<?> deleteById(Long id);
 
 
 }

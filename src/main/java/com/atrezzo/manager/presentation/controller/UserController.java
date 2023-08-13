@@ -2,6 +2,8 @@ package com.atrezzo.manager.presentation.controller;
 
 import com.atrezzo.manager.application.util.ChangePasswordRequest;
 import com.atrezzo.manager.application.dto.UserDTO;
+import com.atrezzo.manager.domain.model.enums.Roles;
+import com.atrezzo.manager.presentation.exception.NoClassFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -15,11 +17,11 @@ public interface UserController {
 
     ResponseEntity<List<UserDTO>> findAllUsers();
 
-    ResponseEntity<?> updateUser(UserDTO userDTO) throws ClassNotFoundException;
+    ResponseEntity<UserDTO> updateUser(UserDTO userDTO) throws NoClassFoundException;
 
-    ResponseEntity<?> changeUserPassword(@RequestBody ChangePasswordRequest changePasswordRequest);
+    ResponseEntity<UserDTO> changeUserPassword(@RequestBody ChangePasswordRequest changePasswordRequest);
 
     ResponseEntity<?> deleteUserById(Long id);
 
-    ResponseEntity<?> findUserByRole(String roleName);
+    ResponseEntity<List<UserDTO>> findUserByRole(Roles roleName);
 }
