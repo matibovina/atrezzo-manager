@@ -30,6 +30,8 @@ public class EventEntity extends BaseEntity{
 
     private Double totalIncome;
 
+    private Double totalAmount;
+
     @ElementCollection
     private Map<WorkerEntity, Double> workerSalary;
 

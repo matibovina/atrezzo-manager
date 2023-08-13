@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -50,7 +49,7 @@ public class QuoteEntity extends BaseEntity{
     private EventEntity event;
 
     @OneToMany(mappedBy = "quote", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<QuoteSessionEntity> eventSessions;
+    private List<QuoteSessionEntity> quoteSessions;
 
     public void setStatus(QuoteStatus status){
         this.status = status;

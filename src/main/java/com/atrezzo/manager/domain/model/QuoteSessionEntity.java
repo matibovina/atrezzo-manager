@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -21,10 +21,6 @@ public class QuoteSessionEntity {
     @GeneratedValue
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "service_id")
-    private ServiceEntity service;
-
     @Column(name = "quantity")
     private Integer quantity;
 
@@ -35,10 +31,10 @@ public class QuoteSessionEntity {
     private Integer durationHours;
 
     @Column(name = "start_time")
-    private LocalTime startTime;
+    private LocalDateTime startTime;
 
     @Column(name = "end_time")
-    private LocalTime endTime;
+    private LocalDateTime endTime;
 
     @OneToMany(mappedBy = "quoteSession", cascade = CascadeType.ALL)
     private List<SessionServiceEntity> sessionServices;
@@ -47,13 +43,14 @@ public class QuoteSessionEntity {
     @JoinColumn(name = "quote_id")
     private QuoteEntity quote;
 
-    public Long calculateDuration() {
+
+    /*REVISAR METODO*/
+    public int calculateDuration() {
         if (startTime == null || endTime == null) {
-            // Aquí deberías manejar esta situación, quizás lanzando una excepción.
             throw new IllegalStateException("startTime and endTime must not be null");
         }
-        long diffInMillies = Math.abs(endTime.toNanoOfDay() - startTime.toNanoOfDay());
-        long diffInSeconds = diffInMillies / 1_000_000_000;
+
+        int diffInSeconds = 100;
         return diffInSeconds;
     }
 }

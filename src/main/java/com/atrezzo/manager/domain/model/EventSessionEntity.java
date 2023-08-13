@@ -6,9 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 
 @Entity
@@ -38,5 +36,20 @@ public class EventSessionEntity {
 
     @OneToMany(mappedBy = "eventSession", cascade = CascadeType.ALL)
     private List<SessionServiceEntity> sessionServices;
+
+
+    public Double calculateSessionTotalAmount() {
+
+        double sessionTotalAmount = 0;
+
+        for (var sessionService : sessionServices) {
+            sessionTotalAmount+= sessionService.getTotalServicePrice();
+        }
+
+        return sessionTotalAmount;
+    }
+
+
+
 
 }

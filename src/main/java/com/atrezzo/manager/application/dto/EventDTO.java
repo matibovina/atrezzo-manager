@@ -20,6 +20,8 @@ public class EventDTO {
 
     private Double totalIncome;
 
+    private Double totalAmount;
+
     private LocalDateTime createdAt;
 
     private Map<WorkerDTO, Double> workerSalary;
