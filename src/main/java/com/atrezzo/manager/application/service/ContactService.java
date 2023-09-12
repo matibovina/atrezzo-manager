@@ -1,23 +1,23 @@
 package com.atrezzo.manager.application.service;
 
-import com.atrezzo.manager.domain.model.Contact;
+import com.atrezzo.manager.application.dto.ContactDTO;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
 
 public interface ContactService {
 
-    Contact addNewContact(Contact contact);
+    ContactDTO addNewContact(ContactDTO contact);
 
-    Contact findContact(String firstName, String lastName, String companyName);
+    ContactDTO findContact(String firstName, String lastName, String companyName);
 
-    Page<Contact> findAllContacts(int pageNumber, int pageSize);
+    Page<ContactDTO> findAllContacts(int pageNumber, int pageSize);
 
-    List<Contact> findAllContactsByCompanyName(String companyName);
+    List<ContactDTO> findAllContactsByCompanyName(String companyName);
 
-    Contact findContactById(Long id) throws ClassNotFoundException;
+    ContactDTO findContactById(Long id) throws ClassNotFoundException;
 
-    Contact updateContact(Contact contact);
+    ContactDTO updateContact(ContactDTO contact);
 
     void deleteContactById(Long id);
 

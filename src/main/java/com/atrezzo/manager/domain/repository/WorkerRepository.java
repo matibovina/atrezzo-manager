@@ -1,9 +1,11 @@
 package com.atrezzo.manager.domain.repository;
 
-import com.atrezzo.manager.infrastructure.persistence.WorkerEntity;
+import com.atrezzo.manager.domain.model.WorkerEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface WorkerRepository extends JpaRepository<WorkerEntity, Long> {
+@Repository
+public interface  WorkerRepository extends JpaRepository<WorkerEntity, Long> {
 
     WorkerEntity findByEmail(String email);
     WorkerEntity findByCuitNumber(String cuitNumber);

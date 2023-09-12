@@ -4,8 +4,8 @@ import com.atrezzo.manager.application.dto.WorkerDTO;
 import com.atrezzo.manager.application.service.WorkerService;
 import com.atrezzo.manager.domain.repository.AddressRepository;
 import com.atrezzo.manager.domain.repository.WorkerRepository;
-import com.atrezzo.manager.infrastructure.persistence.AddressEntity;
-import com.atrezzo.manager.infrastructure.persistence.WorkerEntity;
+import com.atrezzo.manager.domain.model.AddressEntity;
+import com.atrezzo.manager.domain.model.WorkerEntity;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,8 +59,6 @@ public class WorkerServiceImpl implements WorkerService {
             addressRepository.save(newAddress);
             worker.setAddress(newAddress);
         }
-
-
         WorkerEntity savedWorker = workerRepository.save(worker);
         return modelMapper.map(savedWorker, WorkerDTO.class);
     }

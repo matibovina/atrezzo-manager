@@ -1,30 +1,30 @@
 package com.atrezzo.manager.application.service;
 
+import com.atrezzo.manager.application.dto.ClientDTO;
+import com.atrezzo.manager.application.dto.UserDTO;
 import com.atrezzo.manager.application.util.ClientSearchCriteria;
-import com.atrezzo.manager.domain.model.Client;
-import com.atrezzo.manager.domain.model.User;
 
 import java.util.List;
 
 public interface ClientService {
 
-   Client createClient(Client client);
+   ClientDTO createClient(ClientDTO client);
 
-   List<Client> findAll();
+   List<ClientDTO> findAll();
 
-   Client findById(Long id);
+   ClientDTO findById(Long id);
 
-    Client findClientByUser(User user);
+    ClientDTO findClientByUser(UserDTO user);
 
-    Client findClientByCuit(String cuit);
+    ClientDTO findClientByCuit(String cuit);
 
-   Client findClientByCompanyName(String companyName);
+   ClientDTO findClientByCompanyName(String companyName);
 
-   Client findClientByLegalName(String legalName);
+   ClientDTO findClientByLegalName(String legalName);
 
-    Client findClient(ClientSearchCriteria searchCriteria);
+    ClientDTO findClient(ClientSearchCriteria searchCriteria);
 
-    Client updateClient(Client client);
+    ClientDTO updateClient(ClientDTO client);
 
     void deleteClientById(Long id);
 
