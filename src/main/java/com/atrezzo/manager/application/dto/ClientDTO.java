@@ -23,7 +23,6 @@ public class ClientDTO implements Serializable {
         private String companyName;
         private String legalName;
         private String cuitNumber;
-        @Enumerated(EnumType.STRING)
         private TaxCondition taxCondition;
         private String email;
         private String phone;

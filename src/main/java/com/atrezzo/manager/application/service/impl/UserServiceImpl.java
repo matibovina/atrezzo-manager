@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
         userRoleEntity.setRole(roleEntity);
         userRoleEntity.setUser(userEntity);
 
-        userEntity.getRoles().add(userRoleEntity);
+        //userEntity.getRoles().add(userRoleEntity);
 
         try {
             userRepository.save(userEntity);

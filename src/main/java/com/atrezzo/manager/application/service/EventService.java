@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface EventService {
 
-    EventDTO createEvent(Long quoteId);
+    EventDTO createEvent(QuoteDTO quoteDTO);
 
     EventDTO updateEvent(EventDTO event);
 

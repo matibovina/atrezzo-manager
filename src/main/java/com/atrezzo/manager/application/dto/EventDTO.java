@@ -3,20 +3,21 @@ package com.atrezzo.manager.application.dto;
 import com.atrezzo.manager.domain.model.EventSessionEntity;
 import com.atrezzo.manager.domain.model.QuoteEntity;
 import com.atrezzo.manager.domain.model.enums.EventStatus;
+import lombok.Data;
 
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
-
+@Data
 public class EventDTO {
 
     private Long id;
 
-    private QuoteEntity quote;
+    private QuoteDTO quote;
 
-    private List<EventSessionEntity> eventSessions;
+    private List<EventSessionDTO> eventSessions;
 
     private Double totalIncome;
 

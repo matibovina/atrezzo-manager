@@ -2,6 +2,7 @@ package com.atrezzo.manager.application.service.impl;
 
 import com.atrezzo.manager.application.dto.ClientDTO;
 import com.atrezzo.manager.application.dto.QuoteDTO;
+import com.atrezzo.manager.application.service.EventService;
 import com.atrezzo.manager.application.service.QuoteService;
 import com.atrezzo.manager.domain.model.QuoteSessionEntity;
 import com.atrezzo.manager.domain.model.SessionServiceEntity;
@@ -13,6 +14,7 @@ import com.atrezzo.manager.domain.model.QuoteEntity;
 import com.atrezzo.manager.domain.repository.QuoteSessionRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class QuoteServiceImpl implements QuoteService {
 
     private final QuoteRepository quoteRepository;
@@ -31,6 +34,8 @@ public class QuoteServiceImpl implements QuoteService {
     private final ClientRepository clientRepository;
 
     private final QuoteSessionRepository quoteSessionRepository;
+
+    private final EventService eventService;
 
 
 
@@ -42,6 +47,7 @@ public class QuoteServiceImpl implements QuoteService {
         if(quote == null) {
             throw new IllegalArgumentException("Quote can't be null");
         }
+
 
 
         QuoteEntity savedQuote = new QuoteEntity();
@@ -123,6 +129,22 @@ public class QuoteServiceImpl implements QuoteService {
         QuoteEntity updatedQuote = quoteRepository.save(quoteEntity);
         return modelMapper.map(updatedQuote, QuoteDTO.class);
 
+    }
+
+    @Override
+    public QuoteDTO updateQuoteStatus(QuoteDTO quoteDTO) {
+
+        if(quoteDTO.getStatus().getQuoteStatus().equals("ACCEPTED") &&
+        quoteRepository.existsById(quoteDTO.getId()) && quoteDTO.getEvent() == null){
+            try {
+                eventService.createEvent(quoteDTO);
+                quoteRepository.save(modelMapper.map(quoteDTO, QuoteEntity.class));
+            } catch (Exception e) {
+                log.error(e.getMessage());
+            }
+            }
+
+        return quoteDTO;
     }
 
     @Override

@@ -15,6 +15,7 @@ public interface QuoteService {
     List<QuoteDTO> findAllQuotesByClientId(Long clientId);
     List<QuoteDTO> findQuoteByStatus(String status);
     QuoteDTO updateQuote(QuoteDTO quoteDTO);
+    QuoteDTO updateQuoteStatus(QuoteDTO quoteDTO);
     void deleteQuote(Long id);
 
 

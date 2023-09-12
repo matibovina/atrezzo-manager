@@ -55,6 +55,11 @@ public class QuoteControllerImpl implements QuoteController {
     }
 
     @Override
+    public ResponseEntity<QuoteDTO> updateQuoteStatus(QuoteDTO quoteDTO) {
+        return new ResponseEntity<>(quoteService.updateQuoteStatus(quoteDTO), HttpStatus.OK);
+    }
+
+    @Override
     @GetMapping("/quotes/status/{status}")
     public ResponseEntity<List<QuoteDTO>> findQuotesByStatus(@PathVariable QuoteStatus status)
             throws NoClassFoundException, CustomIllegalArgumentException {

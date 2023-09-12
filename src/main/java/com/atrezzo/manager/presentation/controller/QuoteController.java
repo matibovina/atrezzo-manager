@@ -18,6 +18,8 @@ public interface QuoteController {
 
     ResponseEntity<List<QuoteDTO>> findAllQuotesByClientId(Long id);
 
+    ResponseEntity<QuoteDTO> updateQuoteStatus(QuoteDTO quoteDTO);
+
     ResponseEntity<List<QuoteDTO>> findQuotesByStatus(QuoteStatus status);
 
     ResponseEntity<QuoteDTO> updateQuote(QuoteDTO quoteDTO);

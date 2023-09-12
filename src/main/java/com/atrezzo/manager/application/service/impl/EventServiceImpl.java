@@ -13,16 +13,16 @@ import com.atrezzo.manager.infrastructure.exceptions.NoClientsFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @RequiredArgsConstructor
 @Service
+@Transactional
 public class EventServiceImpl implements EventService {
 
     private final EventRepository eventRepository;
@@ -32,9 +32,9 @@ public class EventServiceImpl implements EventService {
     private ModelMapper modelMapper = new ModelMapper();
 
     @Override
-    public EventDTO createEvent(Long quoteId) {
+    public EventDTO createEvent(QuoteDTO quoteDTO) {
 
-        QuoteEntity quote = quoteRepository.findById(quoteId).orElseThrow(() -> new EntityNotFoundException("Quote not found"));
+        QuoteEntity quote = modelMapper.map(quoteDTO, QuoteEntity.class);
 
         if(!quote.getStatus().getQuoteStatus().equals("accepted")){
             throw new IllegalArgumentException("Quote is not accepted yet");
@@ -54,13 +54,16 @@ public class EventServiceImpl implements EventService {
             eventSession.setSessionServices(new ArrayList<>(quoteSession.getSessionServices()));
         }
 
+        eventRepository.save(event);
+
+
         return modelMapper.map(event, EventDTO.class);
     }
 
     @Override
     public EventDTO updateEvent(EventDTO eventDTO) {
 
-        if (eventDTO == null) {
+        if (eventDTO == null || !eventRepository.existsById(eventDTO.getId())) {
             throw new IllegalArgumentException("Event can't be null");
         }
 
@@ -73,6 +76,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public EventDTO findById(Long id) {
         if (id == null) {
             throw new IllegalArgumentException("Id can't be null");
@@ -84,6 +88,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<EventDTO> findAll() {
         return eventRepository.findAll().stream().map(
                 event -> modelMapper.map(event, EventDTO.class)
@@ -91,14 +96,16 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<EventDTO> findEventsByDate(LocalDateTime dateFrom, LocalDateTime dateTo) {
 
-        return eventRepository.findBySessionsDateBetween(dateFrom, dateTo).stream().map(
+        return eventRepository.findByCreatedAtBetween(dateFrom, dateTo).stream().map(
                 event -> modelMapper.map(event, EventDTO.class)
         ).toList();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<EventDTO> findEventByClientId(Long clientId) {
         if (clientId == null) {
             throw new IllegalArgumentException("Id can't be null");
@@ -110,15 +117,17 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<EventDTO> findEventsByStatusAndClientId(EventStatus status, Long clientId) {
-        return eventRepository.findByStatusAndClientId(status, clientId).stream().map(
+        return eventRepository.findByEventStatusAndClientId(status, clientId).stream().map(
                 event -> modelMapper.map(event, EventDTO.class)
         ).toList();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<EventDTO> findEventsByStatus(EventStatus status) {
-        return eventRepository.findByStatus(status).stream().map(
+        return eventRepository.findByEventStatus(status).stream().map(
                 event -> modelMapper.map(event, EventDTO.class)
         ).toList();
     }

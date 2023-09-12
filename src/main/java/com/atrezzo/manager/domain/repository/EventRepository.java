@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface EventRepository extends JpaRepository<EventEntity, Long> {
 
-    List<EventEntity> findBySessionsDateBetween(LocalDateTime dateFrom, LocalDateTime dateTo);
+    List<EventEntity> findByCreatedAtBetween(LocalDateTime dateFrom, LocalDateTime dateTo);
     List<EventEntity> findByClientId(Long clientId);
-    List<EventEntity> findByStatusAndClientId(EventStatus status, Long clientId);
-    List<EventEntity> findByStatus(EventStatus status);
+    List<EventEntity> findByEventStatusAndClientId(EventStatus status, Long clientId);
+    List<EventEntity> findByEventStatus(EventStatus status);
 
 }
